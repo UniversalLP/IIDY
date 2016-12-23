@@ -1,0 +1,16 @@
+[
+{
+  "modid": "iidy",
+  "name": "Is it done yet?",
+  "description": "Notifies you when machine tasks are done.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "https://github.com/UniversalLP/iidy",
+  "authorList": ["universallp"],
+  "credits": "Everyone making their projects open-sauce.",
+  "logoFile": "logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]
