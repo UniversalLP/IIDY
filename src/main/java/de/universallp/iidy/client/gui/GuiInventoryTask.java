@@ -66,7 +66,7 @@ public class GuiInventoryTask extends GuiScreen {
         fontRendererObj = ClientProxy.mc.fontRendererObj;
 
         for (maxSlots = 0; maxSlots < parentContainer.inventorySlots.size(); maxSlots++)
-            if (parent.inventorySlots.get(maxSlots).inventory.equals(Minecraft.getMinecraft().thePlayer.inventory)) break;
+            if (parent.inventorySlots.get(maxSlots).inventory.equals(Minecraft.getMinecraft().player.inventory)) break;
 
         slotTextbox = new GuiNumberField(0, fontRendererObj, 0, 18, 56, 10);
         slotTextbox.xPosition = xOffset - slotTextbox.width - 9;
@@ -109,6 +109,8 @@ public class GuiInventoryTask extends GuiScreen {
         btnAccept.xPosition = xOffset - 69;
         btnAccept.yPosition = yOffset + 91;
 
+        btnCycle.xPosition = xOffset - 46;
+        btnCycle.yPosition = yOffset + 28;
     }
 
     public boolean handleClick(int mouseX, int mouseY, int mouseButton) throws IOException {
@@ -129,7 +131,7 @@ public class GuiInventoryTask extends GuiScreen {
         super.actionPerformed(button);
 
         if (button.id == 1) {
-            mc.thePlayer.closeScreen();
+            mc.player.closeScreen();
             mc.mouseHelper.grabMouseCursor();
             InventoryTask.CompareType c = InventoryTask.CompareType.values()[btnCycle.getIndex()];
             PacketHandler.INSTANCE.sendToServer(new MessageModifyTask(targetDim, targetPos, btnItem.getDisplayStack(), slotTextbox.getValue(), taskMsg.getText(), c));
@@ -162,8 +164,8 @@ public class GuiInventoryTask extends GuiScreen {
         for (int i = 0; i < maxSlots; i++) {
             Slot s = parentContainer.getSlot(i);
 
-            if (!s.inventory.equals(Minecraft.getMinecraft().thePlayer.inventory)) {
-                ClientProxy.mc.fontRendererObj.drawStringWithShadow(String.valueOf(s.getSlotIndex()), xOffset + s.xDisplayPosition + 2 + (s.getSlotIndex() > 9 ? 0 : 3), yOffset + s.yDisplayPosition + 4, i == selectedSlot ? 0xFF11 : 0xFFFF);
+            if (!s.inventory.equals(Minecraft.getMinecraft().player.inventory)) {
+                ClientProxy.mc.fontRendererObj.drawStringWithShadow(String.valueOf(s.getSlotIndex()), xOffset + s.xPos + 2 + (s.getSlotIndex() > 9 ? 0 : 3), yOffset + s.yPos + 4, i == selectedSlot ? 0xFF11 : 0xFFFF);
             }
         }
         GlStateManager.enableDepth();

@@ -2,12 +2,18 @@ package de.universallp.iidy.client.task;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import de.universallp.iidy.IsItDoneYet;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.server.FMLServerHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -22,8 +28,6 @@ import java.util.UUID;
 public class InventoryTask implements ITask {
 
     private BlockPos targetBlock;
-
-    private int dimensionID; // Only if present on server
 
     private CompareType compareType;
 
@@ -49,7 +53,7 @@ public class InventoryTask implements ITask {
         targetStack.writeToNBT(this.targetStack);
         this.targetSlot = targetSlot;
         this.finishMsg = finishMsg;
-        this.dimensionID = dim;
+        this.dim = dim;
         this.interval = 20;
         this.targetPlayerUUID = targetPlayerUUID;
         this.compareType = c;
@@ -70,9 +74,13 @@ public class InventoryTask implements ITask {
     @Override
     public void finish(TaskResult result) {
         if (result == TaskResult.SUCCESS) {
-            IsItDoneYet.proxy.getWorldFromDimension(dim).getPlayerEntityByUUID(UUID.fromString(targetPlayerUUID)).addChatMessage(new TextComponentString(ChatFormatting.DARK_GREEN + "[IIDY] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
+            MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
+            PlayerList pl = s.getPlayerList();
+            EntityPlayerMP p = pl.getPlayerByUUID(UUID.fromString(targetPlayerUUID));
+
+            p.sendMessage(new TextComponentString(ChatFormatting.DARK_GREEN + "[IIDY] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
         } else
-            IsItDoneYet.proxy.getWorldFromDimension(dim).getPlayerEntityByUUID(UUID.fromString(targetPlayerUUID)).addChatMessage(new TextComponentString(ChatFormatting.DARK_RED + "[IIDY Task Failed] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
+            FMLServerHandler.instance().getServer().getPlayerList().getPlayerByUUID(UUID.fromString(targetPlayerUUID)).sendMessage(new TextComponentString(ChatFormatting.DARK_RED + "[IIDY Task Failed] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
     }
 
     @Override
@@ -89,7 +97,7 @@ public class InventoryTask implements ITask {
 
             boolean areItemsEqual = ItemStack.areItemsEqual(stackInSlot, stack);
             if (areItemsEqual) {
-                progress = ((float) stackInSlot.func_190916_E()) / ((float) stack.func_190916_E());
+                progress = ((float) stackInSlot.getCount()) / ((float) stack.getCount());
             } else {
                 progress = 0;
             }
@@ -106,7 +114,7 @@ public class InventoryTask implements ITask {
 
     @Override
     public int getDim() {
-        return dimensionID;
+        return dim;
     }
 
     @Override
@@ -144,7 +152,7 @@ public class InventoryTask implements ITask {
         tag.setInteger("BlockY", targetBlock.getY());
         tag.setInteger("BlockZ", targetBlock.getZ());
 
-        tag.setInteger("Dim", dimensionID);
+        tag.setInteger("Dim", dim);
 
         tag.setByte("CompareType", (byte) compareType.ordinal());
 
@@ -170,7 +178,7 @@ public class InventoryTask implements ITask {
             this.targetBlock = new BlockPos(tag.getInteger("BlockX"), tag.getInteger("BlockY"), tag.getInteger("BlockZ"));
 
         if (tag.hasKey("Dim"))
-            this.dimensionID = tag.getInteger("Dim");
+            this.dim = tag.getInteger("Dim");
 
         if (tag.hasKey("CompareType"))
             this.compareType = CompareType.values()[tag.getByte("CompareType")];
@@ -217,8 +225,8 @@ public class InventoryTask implements ITask {
 
             if (!flag)
                 return false;
-            int sizeTarget = target.func_190916_E();
-            int sizeStack = stack2.func_190916_E();
+            int sizeTarget = target.getCount();
+            int sizeStack = stack2.getCount();
 
             switch (this) {
                 case LESSTHAN:

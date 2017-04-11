@@ -1,5 +1,6 @@
 package de.universallp.iidy.core.network.messages;
 
+import de.universallp.iidy.client.task.BlockStateTask;
 import de.universallp.iidy.client.task.ITask;
 import de.universallp.iidy.client.task.InventoryTask;
 import de.universallp.iidy.core.handler.EventHandlers;
@@ -42,6 +43,14 @@ public class MessageModifyTask implements IMessage, IMessageHandler<MessageModif
         this.comparettype = compareType;
     }
 
+    public MessageModifyTask(int dim, BlockPos targetPos, ItemStack targetState, String finishMsg) {
+        this.targetDim = dim;
+        this.targetPos = targetPos;
+        this.targetStack = new ItemStack(targetState.getItem(), 1, targetState.getItemDamage()); // No need for sending nbt
+        this.finishMsg = finishMsg;
+        this.taskType = ITask.TaskType.BLOCK_STATE;
+    }
+
     public MessageModifyTask(int taskID) {
         this.taskID = taskID;
         this.taskType = ITask.TaskType.DELETE;
@@ -59,6 +68,11 @@ public class MessageModifyTask implements IMessage, IMessageHandler<MessageModif
             comparettype = InventoryTask.CompareType.values()[buf.readByte()];
         } else if (taskType == ITask.TaskType.DELETE) {
             taskID = buf.readInt();
+        } else if (taskType == ITask.TaskType.BLOCK_STATE) {
+            targetDim = buf.readInt();
+            finishMsg = ByteBufUtils.readUTF8String(buf);
+            targetStack = ByteBufUtils.readItemStack(buf);
+            targetPos = PacketHandler.readBlockPos(buf);
         }
     }
 
@@ -74,6 +88,11 @@ public class MessageModifyTask implements IMessage, IMessageHandler<MessageModif
             buf.writeByte(comparettype.ordinal());
         } else if (taskType == ITask.TaskType.DELETE) {
             buf.writeInt(taskID);
+        } else if (taskType == ITask.TaskType.BLOCK_STATE) {
+            buf.writeInt(targetDim);
+            ByteBufUtils.writeUTF8String(buf, finishMsg);
+            ByteBufUtils.writeItemStack(buf, targetStack);
+            PacketHandler.writeBlockPos(buf, targetPos);
         }
     }
 
@@ -85,6 +104,8 @@ public class MessageModifyTask implements IMessage, IMessageHandler<MessageModif
             EventHandlers.serverTaskHandler.addTask(new InventoryTask(message.targetDim, pl.getUniqueID().toString(), message.targetPos, message.targetStack, message.targetSlot, message.finishMsg, message.comparettype));
         } else if (message.taskType == ITask.TaskType.DELETE) {
             EventHandlers.serverTaskHandler.tryRemoveTask(message.taskID, pl.getUniqueID().toString());
+        } else if (message.taskType == ITask.TaskType.BLOCK_STATE) {
+            EventHandlers.serverTaskHandler.addTask(new BlockStateTask(message.targetDim, message.targetPos, message.targetStack, message.finishMsg, pl.getUniqueID().toString()));
         }
         return null;
     }

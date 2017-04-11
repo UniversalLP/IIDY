@@ -61,8 +61,8 @@ public class EventHandlers {
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT && ClientProxy.KEY_MAKE_TASK.isPressed()) {
             RayTraceResult rayTraceResult = ClientProxy.mc.objectMouseOver;
             current_target = rayTraceResult.getBlockPos();
-            current_dimension = Minecraft.getMinecraft().thePlayer.dimension;
-            TileEntity te = Minecraft.getMinecraft().theWorld.getTileEntity(current_target);
+            current_dimension = Minecraft.getMinecraft().player.dimension;
+            TileEntity te = Minecraft.getMinecraft().world.getTileEntity(current_target);
             EnumFacing face = rayTraceResult.sideHit;
             FMLCommonHandler.instance().showGuiScreen(new GuiSelectTask(te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK, current_target, face));
         } else {
@@ -77,7 +77,7 @@ public class EventHandlers {
             GuiScreen currentGui = e.getGui();
             if (currentGui instanceof GuiContainer) {
 
-                Container openContainer = ClientProxy.mc.thePlayer.openContainer;
+                Container openContainer = ClientProxy.mc.player.openContainer;
                 if (openContainer != null) {
 
                     if (guiInventoryTask == null)

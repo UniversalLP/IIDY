@@ -1,7 +1,9 @@
 package de.universallp.iidy.core;
 
+import de.universallp.iidy.client.gui.GuiBlockStateTask;
 import de.universallp.iidy.client.gui.GuiSelectTask;
 import de.universallp.iidy.client.task.ITask;
+import de.universallp.iidy.core.container.ContainerBlockStateTask;
 import de.universallp.iidy.core.handler.EventHandlers;
 import de.universallp.iidy.core.network.PacketHandler;
 import de.universallp.iidy.core.network.messages.MessageListTasks;
@@ -29,6 +31,8 @@ public class GuiHandler implements IGuiHandler {
             List<ITask> tasks = EventHandlers.serverTaskHandler.getTasksForPlayer(player.getUniqueID().toString());
             if (tasks != null)
                 PacketHandler.INSTANCE.sendTo(new MessageListTasks(tasks), (EntityPlayerMP) player);
+        } else if (ID == 2) { // Blockstate Task
+            return new ContainerBlockStateTask(player.inventory, player);
         }
 
         return null;
@@ -38,6 +42,8 @@ public class GuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == 0) { // Select screen
             return new GuiSelectTask(false, false, new BlockPos(x, y, z), EnumFacing.DOWN);
+        } else if (ID == 2) {
+            return new GuiBlockStateTask(new ContainerBlockStateTask(player.inventory, player), player.inventory);
         }
 
         return null;

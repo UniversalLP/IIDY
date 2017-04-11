@@ -14,3 +14,5 @@ iidy.lbl.finishmsg=Finish Message:
 iidy.gui.activetasks=Active Tasks
 iidy.task.inventory=Inventory task
 iidy.task.blockstate=Blockstate task
+iidy.lbl.changeto=When state changes to
+iidy.lbl.ctrlfordesc=<ctrl> for block description

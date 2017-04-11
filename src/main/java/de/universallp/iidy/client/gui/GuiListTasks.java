@@ -116,7 +116,7 @@ public class GuiListTasks extends GuiScreen {
                 if (scrollOffset + maxTasks < tasks.size())
                     scrollOffset++;
             }
-            scrollBar.setScrollPercent(MathHelper.clamp_float(((float)scrollOffset / maxTasks), 0.0F, 1.0F));
+            scrollBar.setScrollPercent(MathHelper.clamp(((float)scrollOffset / maxTasks), 0.0F, 1.0F));
         }
     }
 
@@ -182,6 +182,6 @@ public class GuiListTasks extends GuiScreen {
         mc.getRenderItem().renderItemAndEffectIntoGUI(s, x, y);
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableDepth();
-        mc.fontRendererObj.drawStringWithShadow(String.valueOf(s.func_190916_E()), x + (s.func_190916_E() > 9 ? 7 : 12), y + 10, 0xFFFFFF);
+        mc.fontRendererObj.drawStringWithShadow(String.valueOf(s.getCount()), x + (s.getCount() > 9 ? 7 : 12), y + 10, 0xFFFFFF);
     }
 }

@@ -25,7 +25,7 @@ import java.util.Map;
 public class TaskSaveHandler extends WorldSavedData {
     private static final String DATA_NAME = IsItDoneYet.MODID + "-TasksData";
 
-    private Map<String, List<ITask>> activeTasks;
+    private Map<String, List<ITask>> activeTasks = new HashMap<String, List<ITask>>();
 
     public TaskSaveHandler() {
         super(DATA_NAME);

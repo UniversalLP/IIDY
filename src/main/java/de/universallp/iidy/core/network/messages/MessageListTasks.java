@@ -2,6 +2,7 @@ package de.universallp.iidy.core.network.messages;
 
 import de.universallp.iidy.client.ClientProxy;
 import de.universallp.iidy.client.gui.GuiListTasks;
+import de.universallp.iidy.client.task.BlockStateTask;
 import de.universallp.iidy.client.task.ITask;
 import de.universallp.iidy.client.task.InventoryTask;
 import io.netty.buffer.ByteBuf;
@@ -44,6 +45,9 @@ public class MessageListTasks implements IMessage, IMessageHandler<MessageListTa
                 task = new InventoryTask(0, "", BlockPos.ORIGIN, ByteBufUtils.readItemStack(buf), buf.readInt(), ByteBufUtils.readUTF8String(buf), InventoryTask.CompareType.EQUALS);
                 task.setTaskID(buf.readInt());
                 task.setProgress(buf.readFloat());
+            } else if (type == ITask.TaskType.BLOCK_STATE) {
+                task = new BlockStateTask(0, BlockPos.ORIGIN, ByteBufUtils.readItemStack(buf), ByteBufUtils.readUTF8String(buf), "");
+                task.setTaskID(buf.readInt());
             }
             tasks.add(task);
         }
@@ -54,21 +58,24 @@ public class MessageListTasks implements IMessage, IMessageHandler<MessageListTa
         buf.writeInt(tasks.size());
 
         for (ITask t : tasks) {
+            buf.writeInt(t.getType().ordinal());
             if (t.getType() == ITask.TaskType.INVENTORY_SLOT) {
-                buf.writeInt(t.getType().ordinal());
                 ByteBufUtils.writeItemStack(buf, ((InventoryTask) t).getTargetStack());
                 buf.writeInt(((InventoryTask) t).getTargetSlot());
                 ByteBufUtils.writeUTF8String(buf, t.getFinishMessage());
                 buf.writeInt(t.getTaskID());
                 buf.writeFloat(t.getProgress());
+            } else if (t.getType() == ITask.TaskType.BLOCK_STATE) {
+                ByteBufUtils.writeItemStack(buf, ((BlockStateTask) t).getTargetState());
+                ByteBufUtils.writeUTF8String(buf, t.getFinishMessage());
+                buf.writeInt(t.getTaskID());
             }
-
         }
     }
 
     @Override
     public IMessage onMessage(MessageListTasks message, MessageContext ctx) {
-        FMLClientHandler.instance().displayGuiScreen(ClientProxy.mc.thePlayer, new GuiListTasks(message.tasks));
+        FMLClientHandler.instance().displayGuiScreen(ClientProxy.mc.player, new GuiListTasks(message.tasks));
         return null;
     }
 }
