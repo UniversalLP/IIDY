@@ -18,10 +18,10 @@ import net.minecraftforge.fml.server.FMLServerHandler;
 import java.util.UUID;
 
 /**
- * Created by universallp on 10.04.2017.
+ * Created by universal on 10.04.2017.
  * This file is part of IIDY which is licenced
  * under the MOZILLA PUBLIC LICENCE 2.0 - mozilla.org/en-US/MPL/2.0/
- * github.com/UniversalLP/IIDY
+ * github.com/univrsal/IIDY
  */
 public class BlockStateTask implements ITask {
 

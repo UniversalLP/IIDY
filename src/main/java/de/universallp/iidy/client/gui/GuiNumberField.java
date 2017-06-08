@@ -4,10 +4,10 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;
 
 /**
- * Created by universallp on 29.11.2016 16:33.
+ * Created by universal on 29.11.2016 16:33.
  * This file is part of IIDY which is licenced
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
- * github.com/UniversalLP/IIDY
+ * github.com/univrsal/IIDY
  */
 public class GuiNumberField extends GuiTextField {
 

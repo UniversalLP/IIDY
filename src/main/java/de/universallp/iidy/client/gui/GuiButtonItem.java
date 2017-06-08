@@ -25,10 +25,10 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by universallp on 30.11.2016 18:03.
+ * Created by universal on 30.11.2016 18:03.
  * This file is part of IIDY which is licenced
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
- * github.com/UniversalLP/IIDY
+ * github.com/univrsal/IIDY
  */
 public class GuiButtonItem extends GuiButton {
 

@@ -20,10 +20,10 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by universallp on 03.12.2016 13:54.
+ * Created by universal on 03.12.2016 13:54.
  * This file is part of IIDY which is licenced
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
- * github.com/UniversalLP/IIDY
+ * github.com/univrsal/IIDY
  */
 public class GuiListTasks extends GuiScreen {
     private static final int bgColor = 0xFFC6C6C6;

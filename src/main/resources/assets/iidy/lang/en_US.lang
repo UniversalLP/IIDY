@@ -1,4 +1,4 @@
-iidy.key.maketask=Create new IIDY Task
+iidy.key.maketask=Open IIDY GUI
 iidy.btn.inventorytask=Inventory Task
 iidy.inventorytask.desc=Finishes when an inventory has certain items in a certain slot
 iidy.inventorytask.noinv.desc=You're not looking at a supported inventory block!

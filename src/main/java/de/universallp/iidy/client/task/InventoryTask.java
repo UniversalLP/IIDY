@@ -20,10 +20,10 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.UUID;
 
 /**
- * Created by universallp on 28.11.2016 15:40.
+ * Created by universal on 28.11.2016 15:40.
  * This file is part of IIDY which is licenced
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
- * github.com/UniversalLP/IIDY
+ * github.com/univrsal/IIDY
  */
 public class InventoryTask implements ITask {
 
@@ -79,8 +79,9 @@ public class InventoryTask implements ITask {
             EntityPlayerMP p = pl.getPlayerByUUID(UUID.fromString(targetPlayerUUID));
 
             p.sendMessage(new TextComponentString(ChatFormatting.DARK_GREEN + "[IIDY] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
-        } else
-            FMLServerHandler.instance().getServer().getPlayerList().getPlayerByUUID(UUID.fromString(targetPlayerUUID)).sendMessage(new TextComponentString(ChatFormatting.DARK_RED + "[IIDY Task Failed] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
+        } else {
+            FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(UUID.fromString(targetPlayerUUID)).sendMessage(new TextComponentString(ChatFormatting.RED + "[IIDY Task Failed] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
+        }
     }
 
     @Override

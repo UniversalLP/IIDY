@@ -12,10 +12,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
 /**
- * Created by universallp on 01.12.2016 18:04.
+ * Created by universal on 01.12.2016 18:04.
  * This file is part of IIDY which is licenced
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
- * github.com/UniversalLP/IIDY
+ * github.com/univrsal/IIDY
  */
 public class PacketHandler {
 

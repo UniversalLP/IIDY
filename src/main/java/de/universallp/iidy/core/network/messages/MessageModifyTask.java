@@ -15,10 +15,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 /**
- * Created by universallp on 01.12.2016 18:06.
+ * Created by universal on 01.12.2016 18:06.
  * This file is part of IIDY which is licenced
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
- * github.com/UniversalLP/IIDY
+ * github.com/univrsal/IIDY
  */
 public class MessageModifyTask implements IMessage, IMessageHandler<MessageModifyTask, IMessage> {
 

@@ -22,14 +22,15 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.FMLNetworkException;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 
+import javax.swing.text.html.HTMLDocument;
 import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * Created by universallp on 28.11.2016 16:13.
+ * Created by universal on 28.11.2016 16:13.
  * This file is part of IIDY which is licenced
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
- * github.com/UniversalLP/IIDY
+ * github.com/univrsal/IIDY
  */
 public class GuiSelectTask extends GuiScreen {
 
@@ -57,8 +58,8 @@ public class GuiSelectTask extends GuiScreen {
         int x = this.width / 2 - 75;
         int y = this.height / 2;
 
-        btnInventoryTask = new GuiButton(0, x, y - 22, 150, 20, I18n.format("iidy.btn.inventorytask"));
-        btnBlockStateTask = new GuiButton(1, x, y, 150, 20, I18n.format("iidy.btn.blockstatetask"));
+        btnInventoryTask = new GuiButton(0, x, y - 24, 150, 20, I18n.format("iidy.btn.inventorytask"));
+        btnBlockStateTask = new GuiButton(1, x, y - 1, 150, 20, I18n.format("iidy.btn.blockstatetask"));
         btnListTasks = new GuiButton(2, x, y + 22, 150, 20, I18n.format("iidy.btn.listtask"));
 
         btnInventoryTask.enabled = inventoryBlock;
@@ -104,6 +105,14 @@ public class GuiSelectTask extends GuiScreen {
         drawTexturedModalRect(i, j, 0, 0, 176, 86);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
+
+        String text = IsItDoneYet.MODID.toUpperCase();
+        fontRendererObj.drawStringWithShadow(text, width / 2 - (fontRendererObj.getStringWidth(text) / 2), j - 40, 0xFFFFFF);
+
+        text = "Select your task";
+        fontRendererObj.drawString(text, width / 2 - (fontRendererObj.getStringWidth(text) / 2), j - 20, 0xBBBBBB);
+
+
         if (btnInventoryTask.isMouseOver()) {
             if (btnInventoryTask.enabled)
                 drawHoveringText(Arrays.asList(I18n.format("iidy.inventorytask.desc")), mouseX, mouseY);

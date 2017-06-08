@@ -8,10 +8,10 @@ import org.lwjgl.input.Mouse;
 import java.io.IOException;
 
 /**
- * Created by universallp on 17.12.2016 13:21.
+ * Created by universal on 17.12.2016 13:21.
  * This file is part of IIDY which is licenced
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
- * github.com/UniversalLP/IIDY
+ * github.com/univrsal/IIDY
  */
 public class GuiScrollBar extends GuiScreen {
 

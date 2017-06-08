@@ -17,10 +17,10 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import java.util.List;
 
 /**
- * Created by universallp on 28.11.2016 16:15.
+ * Created by universal on 28.11.2016 16:15.
  * This file is part of IIDY which is licenced
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
- * github.com/UniversalLP/IIDY
+ * github.com/univrsal/IIDY
  */
 public class GuiHandler implements IGuiHandler {
 

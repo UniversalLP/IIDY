@@ -16,10 +16,10 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 /**
- * Created by universallp on 28.11.2016 15:48.
+ * Created by universal on 28.11.2016 15:48.
  * This file is part of IIDY which is licenced
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
- * github.com/UniversalLP/IIDY
+ * github.com/univrsal/IIDY
  */
 public class ClientProxy extends CommonProxy {
 
@@ -30,7 +30,7 @@ public class ClientProxy extends CommonProxy {
     public static final String[] GUI_TOP = new String[] { "r", "field_147009_r", "guiTop" };
 
     public static KeyBinding KEY_MAKE_TASK = new KeyBinding("iidy.key.maketask", Keyboard.KEY_C, "key.categories.gameplay");
-    public static KeyBinding KEY_LIST_TASKS = new KeyBinding("iidy.key.listtasks", Keyboard.KEY_L, "key.categories.gameplay");
+
     @Override
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
