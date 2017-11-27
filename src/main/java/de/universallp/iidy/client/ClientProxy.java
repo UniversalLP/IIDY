@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -30,6 +31,10 @@ public class ClientProxy extends CommonProxy {
     public static final String[] GUI_TOP = new String[] { "r", "field_147009_r", "guiTop" };
 
     public static KeyBinding KEY_MAKE_TASK = new KeyBinding("iidy.key.maketask", Keyboard.KEY_C, "key.categories.gameplay");
+
+    public static ITooltipFlag getToolTipFlags() {
+        return ClientProxy.mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL;
+    }
 
     @Override
     public void preInit(FMLPreInitializationEvent e) {

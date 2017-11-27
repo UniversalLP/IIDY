@@ -104,7 +104,7 @@ public class GuiButtonBlockState extends GuiButtonItem {
 
     @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-        if (this.enabled && this.visible && mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height) {
+        if (this.enabled && this.visible && mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height) {
             Block b = Block.getBlockFromItem(mc.player.inventory.getItemStack().getItem());
 
             displayStack = mc.player.inventory.getItemStack().copy();
@@ -134,7 +134,7 @@ public class GuiButtonBlockState extends GuiButtonItem {
         int yPos;
 
         if (GuiScreen.isCtrlKeyDown() || properties.size() < 1) {
-            list.addAll(stack.getTooltip(ClientProxy.mc.player, ClientProxy.mc.gameSettings.advancedItemTooltips));
+            list.addAll(stack.getTooltip(ClientProxy.mc.player, ClientProxy.getToolTipFlags()));
 
             for (int i = 0; i < list.size(); ++i) {
                 if (i == 0) {
@@ -148,7 +148,7 @@ public class GuiButtonBlockState extends GuiButtonItem {
             yPos = y;
         } else {
             list.add(stack.getDisplayName());
-            FontRenderer f  = ClientProxy.mc.fontRendererObj;
+            FontRenderer f  = ClientProxy.mc.fontRenderer;
             int i = 0;
             int offset = f.getStringWidth(stack.getDisplayName());
             String line;
@@ -174,7 +174,7 @@ public class GuiButtonBlockState extends GuiButtonItem {
         ScaledResolution res = new ScaledResolution(ClientProxy.mc);
         FontRenderer font = stack.getItem().getFontRenderer(stack);
         net.minecraftforge.fml.client.config.GuiUtils.preItemToolTip(stack);
-        GuiUtils.drawHoveringText(list, xPos, yPos, res.getScaledWidth(), res.getScaledHeight(), res.getScaledWidth(), (font == null ? ClientProxy.mc.fontRendererObj : font));
+        GuiUtils.drawHoveringText(list, xPos, yPos, res.getScaledWidth(), res.getScaledHeight(), res.getScaledWidth(), (font == null ? ClientProxy.mc.fontRenderer : font));
         net.minecraftforge.fml.client.config.GuiUtils.postItemToolTip();
     }
 }

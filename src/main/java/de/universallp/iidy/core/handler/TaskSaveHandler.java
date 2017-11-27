@@ -6,8 +6,8 @@ import de.universallp.iidy.client.task.InventoryTask;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.storage.MapStorage;
+import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.fml.common.FMLLog;
 import org.apache.logging.log4j.Level;
 
@@ -22,7 +22,8 @@ import java.util.Map;
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
  * github.com/univrsal/IIDY
  */
-public class TaskSaveHandler extends WorldSavedData {
+public class TaskSaveHandler extends WorldSavedData
+{
     private static final String DATA_NAME = IsItDoneYet.MODID + "-TasksData";
 
     private Map<String, List<ITask>> activeTasks = new HashMap<String, List<ITask>>();

@@ -71,7 +71,7 @@ public class GuiButtonItem extends GuiButton {
     }
 
     protected void renderToolTip(ItemStack stack, int x, int y) {
-        List<String> list = stack.getTooltip(ClientProxy.mc.player, ClientProxy.mc.gameSettings.advancedItemTooltips);
+        List<String> list = stack.getTooltip(ClientProxy.mc.player, ClientProxy.getToolTipFlags());
 
         for (int i = 0; i < list.size(); ++i) {
             if (i == 0) {
@@ -84,7 +84,7 @@ public class GuiButtonItem extends GuiButton {
         ScaledResolution res = new ScaledResolution(ClientProxy.mc);
         FontRenderer font = stack.getItem().getFontRenderer(stack);
         net.minecraftforge.fml.client.config.GuiUtils.preItemToolTip(stack);
-        GuiUtils.drawHoveringText(list, x, y, res.getScaledWidth(), res.getScaledHeight(), res.getScaledWidth(), (font == null ? ClientProxy.mc.fontRendererObj : font));
+        GuiUtils.drawHoveringText(list, x, y, res.getScaledWidth(), res.getScaledHeight(), res.getScaledWidth(), (font == null ? ClientProxy.mc.fontRenderer : font));
         net.minecraftforge.fml.client.config.GuiUtils.postItemToolTip();
     }
 
@@ -95,23 +95,23 @@ public class GuiButtonItem extends GuiButton {
     }
 
     @Override
-    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY, float pT) {
         if (this.visible)  {
-            hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+            hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
             EventHandlers.skipClick = hovered;
             mc.getTextureManager().bindTexture(GuiInventoryTask.bg);;
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.enableDepth();
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, 123, 0, this.width, this.height);
+            this.drawTexturedModalRect(this.x, this.y, 123, 0, this.width, this.height);
 
             RenderHelper.enableGUIStandardItemLighting();
 
-            mc.getRenderItem().renderItemAndEffectIntoGUI(displayStack, xPosition + 1, yPosition + 1);
+            mc.getRenderItem().renderItemAndEffectIntoGUI(displayStack, x + 1, y + 1);
             RenderHelper.disableStandardItemLighting();
             GlStateManager.disableDepth();
-            mc.fontRendererObj.drawStringWithShadow(String.valueOf(displayStack.getCount()), this.xPosition + (displayStack.getCount() > 9 ? 7 : 12), this.yPosition + 10, 0xFFFFFF);
+            mc.fontRenderer.drawStringWithShadow(String.valueOf(displayStack.getCount()), this.x + (displayStack.getCount() > 9 ? 7 : 12), this.y + 10, 0xFFFFFF);
         }
     }
 }

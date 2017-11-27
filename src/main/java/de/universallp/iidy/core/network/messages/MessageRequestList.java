@@ -35,7 +35,7 @@ public class MessageRequestList  implements IMessage, IMessageHandler<MessageReq
 
     @Override
     public IMessage onMessage(MessageRequestList message, MessageContext ctx) {
-        EntityPlayer pl = ctx.getServerHandler().playerEntity;
+        EntityPlayer pl = ctx.getServerHandler().player;
         List<ITask> tasks = EventHandlers.serverTaskHandler.getTasksForPlayer(pl.getUniqueID().toString());
         if (tasks != null)
             PacketHandler.INSTANCE.sendTo(new MessageListTasks(tasks), (EntityPlayerMP) pl);

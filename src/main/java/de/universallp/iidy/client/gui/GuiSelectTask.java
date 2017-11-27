@@ -107,10 +107,10 @@ public class GuiSelectTask extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
         String text = IsItDoneYet.MODID.toUpperCase();
-        fontRendererObj.drawStringWithShadow(text, width / 2 - (fontRendererObj.getStringWidth(text) / 2), j - 40, 0xFFFFFF);
+        fontRenderer.drawStringWithShadow(text, width / 2 - (fontRenderer.getStringWidth(text) / 2), j - 40, 0xFFFFFF);
 
         text = "Select your task";
-        fontRendererObj.drawString(text, width / 2 - (fontRendererObj.getStringWidth(text) / 2), j - 20, 0xBBBBBB);
+        fontRenderer.drawString(text, width / 2 - (fontRenderer.getStringWidth(text) / 2), j - 20, 0xBBBBBB);
 
 
         if (btnInventoryTask.isMouseOver()) {

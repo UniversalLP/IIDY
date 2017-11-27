@@ -98,7 +98,7 @@ public class MessageModifyTask implements IMessage, IMessageHandler<MessageModif
 
     @Override
     public IMessage onMessage(MessageModifyTask message, MessageContext ctx) {
-        EntityPlayer pl = ctx.getServerHandler().playerEntity;
+        EntityPlayer pl = ctx.getServerHandler().player;
 
         if (message.taskType == ITask.TaskType.INVENTORY_SLOT) {
             EventHandlers.serverTaskHandler.addTask(new InventoryTask(message.targetDim, pl.getUniqueID().toString(), message.targetPos, message.targetStack, message.targetSlot, message.finishMsg, message.comparettype));

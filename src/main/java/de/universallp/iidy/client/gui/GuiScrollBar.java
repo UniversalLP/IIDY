@@ -28,7 +28,7 @@ public class GuiScrollBar extends GuiScreen {
         this.h = height;
         this.isVisible = true;
         mc = Minecraft.getMinecraft();
-        fontRendererObj = mc.fontRendererObj;
+        fontRenderer = mc.fontRenderer;
     }
 
     public boolean isHovered() {

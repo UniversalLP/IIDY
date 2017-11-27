@@ -59,7 +59,7 @@ public class GuiBlockStateTask extends GuiContainer {
         super.initGui();
         Keyboard.enableRepeatEvents(true);
 
-        taskMsg = new GuiTextField(2, fontRendererObj, guiLeft + 8, guiTop + 50, 107, 10);
+        taskMsg = new GuiTextField(2, fontRenderer, guiLeft + 8, guiTop + 50, 107, 10);
 
         ItemStack oldStack = ItemStack.EMPTY;
         if (btnState != null)
@@ -101,10 +101,10 @@ public class GuiBlockStateTask extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        fontRendererObj.drawString(playerInventory.getDisplayName().getUnformattedText(), 8, 64, 4210752);
-        fontRendererObj.drawString(label1,  xSize / 2 - fontRendererObj.getStringWidth(label1) / 2, 12, 4210752);
-        fontRendererObj.drawString(label2, 8,  39, 4210752);
-        fontRendererObj.drawString(label3, 8,  26, 4210752);
+        fontRenderer.drawString(playerInventory.getDisplayName().getUnformattedText(), 8, 64, 4210752);
+        fontRenderer.drawString(label1,  xSize / 2 - fontRenderer.getStringWidth(label1) / 2, 12, 4210752);
+        fontRenderer.drawString(label2, 8,  39, 4210752);
+        fontRenderer.drawString(label3, 8,  26, 4210752);
     }
 
     @Override

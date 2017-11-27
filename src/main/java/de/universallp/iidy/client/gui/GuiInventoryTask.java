@@ -63,19 +63,19 @@ public class GuiInventoryTask extends GuiScreen {
         this.xOffset = ClientProxy.getGuiLeft(parentScreen);
         this.yOffset = ClientProxy.getGuiTop(parentScreen);
 
-        fontRendererObj = ClientProxy.mc.fontRendererObj;
+        fontRenderer = ClientProxy.mc.fontRenderer;
 
         for (maxSlots = 0; maxSlots < parentContainer.inventorySlots.size(); maxSlots++)
             if (parent.inventorySlots.get(maxSlots).inventory.equals(Minecraft.getMinecraft().player.inventory)) break;
 
-        slotTextbox = new GuiNumberField(0, fontRendererObj, 0, 18, 56, 10);
-        slotTextbox.xPosition = xOffset - slotTextbox.width - 9;
-        slotTextbox.yPosition = yOffset + 17;
+        slotTextbox = new GuiNumberField(0, fontRenderer, 0, 18, 56, 10);
+        slotTextbox.x = xOffset - slotTextbox.width - 9;
+        slotTextbox.y = yOffset + 17;
         slotTextbox.setMaximum(maxSlots);
 
-        taskMsg = new GuiTextField(2, fontRendererObj, 0, 8, 107, 10);
-        taskMsg.xPosition = xOffset - taskMsg.width - 5;
-        taskMsg.yPosition = yOffset + 30;
+        taskMsg = new GuiTextField(2, fontRenderer, 0, 8, 107, 10);
+        taskMsg.x = xOffset - taskMsg.width - 5;
+        taskMsg.y = yOffset + 30;
 
         btnItem = new GuiButtonItem(3, xOffset - 22, yOffset + 33);
         btnCycle = new GuiButtonCycle(4, xOffset - 46, yOffset + 28).setOptions("<", "<=", ">", ">=", "=").setIndex(3);
@@ -97,20 +97,20 @@ public class GuiInventoryTask extends GuiScreen {
         this.xOffset = ClientProxy.getGuiLeft(parentGui);
         this.yOffset = ClientProxy.getGuiTop(parentGui);
 
-        slotTextbox.xPosition = xOffset - slotTextbox.width - 9;
-        slotTextbox.yPosition = yOffset + 17;
+        slotTextbox.x = xOffset - slotTextbox.width - 9;
+        slotTextbox.y = yOffset + 17;
 
-        taskMsg.xPosition = xOffset - taskMsg.width - 9;
-        taskMsg.yPosition = yOffset + 58;
+        taskMsg.x = xOffset - taskMsg.width - 9;
+        taskMsg.y = yOffset + 58;
 
-        btnItem.xPosition = xOffset - 27;
-        btnItem.yPosition = yOffset + 29;
+        btnItem.x = xOffset - 27;
+        btnItem.y = yOffset + 29;
 
-        btnAccept.xPosition = xOffset - 69;
-        btnAccept.yPosition = yOffset + 91;
+        btnAccept.x = xOffset - 69;
+        btnAccept.y = yOffset + 91;
 
-        btnCycle.xPosition = xOffset - 46;
-        btnCycle.yPosition = yOffset + 28;
+        btnCycle.x = xOffset - 46;
+        btnCycle.y = yOffset + 28;
     }
 
     public boolean handleClick(int mouseX, int mouseY, int mouseButton) throws IOException {
@@ -165,7 +165,7 @@ public class GuiInventoryTask extends GuiScreen {
             Slot s = parentContainer.getSlot(i);
 
             if (!s.inventory.equals(Minecraft.getMinecraft().player.inventory)) {
-                ClientProxy.mc.fontRendererObj.drawStringWithShadow(String.valueOf(s.getSlotIndex()), xOffset + s.xPos + 2 + (s.getSlotIndex() > 9 ? 0 : 3), yOffset + s.yPos + 4, i == selectedSlot ? 0xFF11 : 0xFFFF);
+                ClientProxy.mc.fontRenderer.drawStringWithShadow(String.valueOf(s.getSlotIndex()), xOffset + s.xPos + 2 + (s.getSlotIndex() > 9 ? 0 : 3), yOffset + s.yPos + 4, i == selectedSlot ? 0xFF11 : 0xFFFF);
             }
         }
         GlStateManager.enableDepth();
@@ -192,10 +192,10 @@ public class GuiInventoryTask extends GuiScreen {
         slotTextbox.drawTextBox();
         taskMsg.drawTextBox();
 
-        fontRendererObj.drawString(label1, xOffset - slotTextbox.width - fontRendererObj.getStringWidth(label1) - 13, yOffset + 18, 4210752);
-        fontRendererObj.drawString(label2, xOffset - slotTextbox.width - fontRendererObj.getStringWidth(label1) - 13, yOffset + 33, 4210752);
-        fontRendererObj.drawString(label3, xOffset - 60 - fontRendererObj.getStringWidth(label3) / 2, yOffset + 5, 4210752);
-        fontRendererObj.drawString(label4, xOffset - slotTextbox.width - fontRendererObj.getStringWidth(label1) - 13, yOffset + 47, 4210752);
+        fontRenderer.drawString(label1, xOffset - slotTextbox.width - fontRenderer.getStringWidth(label1) - 13, yOffset + 18, 4210752);
+        fontRenderer.drawString(label2, xOffset - slotTextbox.width - fontRenderer.getStringWidth(label1) - 13, yOffset + 33, 4210752);
+        fontRenderer.drawString(label3, xOffset - 60 - fontRenderer.getStringWidth(label3) / 2, yOffset + 5, 4210752);
+        fontRenderer.drawString(label4, xOffset - slotTextbox.width - fontRenderer.getStringWidth(label1) - 13, yOffset + 47, 4210752);
 
         GlStateManager.enableLighting();
         RenderHelper.enableStandardItemLighting();

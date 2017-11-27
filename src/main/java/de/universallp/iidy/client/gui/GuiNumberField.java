@@ -15,8 +15,8 @@ public class GuiNumberField extends GuiTextField {
 
     private int max = 255;
 
-    public GuiNumberField(int componentId, FontRenderer fontrendererObj, int x, int y, int par5Width, int par6Height) {
-        super(componentId, fontrendererObj, x, y, par5Width, par6Height);
+    public GuiNumberField(int componentId, FontRenderer fontRenderer, int x, int y, int par5Width, int par6Height) {
+        super(componentId, fontRenderer, x, y, par5Width, par6Height);
         setText(String.valueOf(0));
         setMaxStringLength(6);
     }
@@ -43,10 +43,10 @@ public class GuiNumberField extends GuiTextField {
         super.drawTextBox();
 
         if (!isInteger(getText()) || Integer.parseInt(getText()) > max) {
-            drawRect(this.xPosition - 1, this.yPosition - 1, this.xPosition + this.width + 1, this.yPosition, 0xFFFF0000);
-            drawRect(this.xPosition - 1, this.yPosition + this.height, this.xPosition + this.width + 1, this.yPosition + this.height + 1, 0xFFFF0000);
-            drawRect(this.xPosition - 1, this.yPosition - 1, this.xPosition, this.yPosition + this.height, 0xFFFF0000);
-            drawRect(this.xPosition + this.width, this.yPosition, this.xPosition + this.width + 1, this.yPosition + this.height, 0xFFFF0000);
+            drawRect(this.x - 1, this.y - 1, this.x + this.width + 1, this.y, 0xFFFF0000);
+            drawRect(this.x - 1, this.y + this.height, this.x + this.width + 1, this.y + this.height + 1, 0xFFFF0000);
+            drawRect(this.x - 1, this.y - 1, this.x, this.y + this.height, 0xFFFF0000);
+            drawRect(this.x + this.width, this.y, this.x + this.width + 1, this.y + this.height, 0xFFFF0000);
         }
     }
 

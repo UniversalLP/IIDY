@@ -54,10 +54,10 @@ public class GuiListTasks extends GuiScreen {
         y = height / 2 - h / 2;
         scrollBar = new GuiScrollBar(x + w - 18, y + 15, h - 25);
 
-        maxTasks = (h - 27) / (fontRendererObj.FONT_HEIGHT * 2 + 4);
+        maxTasks = (h - 27) / (fontRenderer.FONT_HEIGHT * 2 + 4);
         int b;
         for (ITask t : tasks) {
-            b = fontRendererObj.getStringWidth(t.getFinishMessage());
+            b = fontRenderer.getStringWidth(t.getFinishMessage());
             if (b > leftOffset)
                 leftOffset = b;
         }
@@ -82,7 +82,7 @@ public class GuiListTasks extends GuiScreen {
         x = width / 2 - w / 2;
         y = height / 2 - h / 2;
         scrollBar.setDimensions(x + w - 18, y + 15, h - 25);
-        maxTasks = (this.h - 27) / (fontRendererObj.FONT_HEIGHT * 2 + 4);
+        maxTasks = (this.h - 27) / (fontRenderer.FONT_HEIGHT * 2 + 4);
     }
 
     @Override
@@ -124,10 +124,10 @@ public class GuiListTasks extends GuiScreen {
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
         if (mouseButton == 0) {
-            int yClick = (mouseY - y - 25) / (fontRendererObj.FONT_HEIGHT * 2 + 4) + scrollOffset;
+            int yClick = (mouseY - y - 25) / (fontRenderer.FONT_HEIGHT * 2 + 4) + scrollOffset;
 
-            int yTask = y + 25 + (fontRendererObj.FONT_HEIGHT + 2) * ((yClick - scrollOffset) * 2);
-            if (mouseX >= x + 2 && mouseX <= x + 12 && mouseY >= yTask && mouseY <= yTask + fontRendererObj.FONT_HEIGHT) {
+            int yTask = y + 25 + (fontRenderer.FONT_HEIGHT + 2) * ((yClick - scrollOffset) * 2);
+            if (mouseX >= x + 2 && mouseX <= x + 12 && mouseY >= yTask && mouseY <= yTask + fontRenderer.FONT_HEIGHT) {
                 if (yClick < tasks.size() && yClick >= 0) {
                     PacketHandler.INSTANCE.sendToServer(new MessageModifyTask(tasks.get(yClick).getTaskID()));
                     tasks.remove(yClick);
@@ -148,7 +148,7 @@ public class GuiListTasks extends GuiScreen {
         drawDefaultBackground();
         drawGuiBody();
 
-        fontRendererObj.drawStringWithShadow(title, w - fontRendererObj.getStringWidth(title) / 2, y + 5, 0xFFFFFF);
+        fontRenderer.drawStringWithShadow(title, w - fontRenderer.getStringWidth(title) / 2, y + 5, 0xFFFFFF);
         int yTask = y + 25;
         ITask t;
 
@@ -157,17 +157,17 @@ public class GuiListTasks extends GuiScreen {
                 break;
             t = tasks.get(i);
 
-            fontRendererObj.drawStringWithShadow(t.getType().getLocalizedName() + " - " + ((int)(t.getProgress() * 100)) + "% ", x + 36, yTask, 0xFFFFFF);
+            fontRenderer.drawStringWithShadow(t.getType().getLocalizedName() + " - " + ((int)(t.getProgress() * 100)) + "% ", x + 36, yTask, 0xFFFFFF);
             if (t instanceof InventoryTask)
                 drawStack(((InventoryTask) t).getTargetStack(), x + 13, yTask);
-            if (mouseX >= x + 2 && mouseX <= x + 12 && mouseY >= yTask && mouseY <= yTask + fontRendererObj.FONT_HEIGHT)
-                fontRendererObj.drawString("x", x + 5, yTask , 0xFF0000);
+            if (mouseX >= x + 2 && mouseX <= x + 12 && mouseY >= yTask && mouseY <= yTask + fontRenderer.FONT_HEIGHT)
+                fontRenderer.drawString("x", x + 5, yTask , 0xFF0000);
             else
-                fontRendererObj.drawString("x", x + 5, yTask, 0x660000);
+                fontRenderer.drawString("x", x + 5, yTask, 0x660000);
 
-            yTask += fontRendererObj.FONT_HEIGHT + 2;
-            fontRendererObj.drawString(t.getFinishMessage(), x + 36, yTask, 0x505050);
-            yTask += fontRendererObj.FONT_HEIGHT + 2;
+            yTask += fontRenderer.FONT_HEIGHT + 2;
+            fontRenderer.drawString(t.getFinishMessage(), x + 36, yTask, 0x505050);
+            yTask += fontRenderer.FONT_HEIGHT + 2;
 
         }
 
@@ -182,6 +182,6 @@ public class GuiListTasks extends GuiScreen {
         mc.getRenderItem().renderItemAndEffectIntoGUI(s, x, y);
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableDepth();
-        mc.fontRendererObj.drawStringWithShadow(String.valueOf(s.getCount()), x + (s.getCount() > 9 ? 7 : 12), y + 10, 0xFFFFFF);
+        mc.fontRenderer.drawStringWithShadow(String.valueOf(s.getCount()), x + (s.getCount() > 9 ? 7 : 12), y + 10, 0xFFFFFF);
     }
 }

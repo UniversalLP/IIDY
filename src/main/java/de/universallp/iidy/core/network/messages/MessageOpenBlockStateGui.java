@@ -29,7 +29,7 @@ public class MessageOpenBlockStateGui implements IMessage, IMessageHandler<Messa
 
     @Override
     public IMessage onMessage(MessageOpenBlockStateGui message, MessageContext ctx) {
-        FMLNetworkHandler.openGui(ctx.getServerHandler().playerEntity, IsItDoneYet.instance, 2, ctx.getServerHandler().playerEntity.getEntityWorld(),0, 0, 0);
+        FMLNetworkHandler.openGui(ctx.getServerHandler().player, IsItDoneYet.instance, 2, ctx.getServerHandler().player.getEntityWorld(),0, 0, 0);
         return null;
     }
 }
