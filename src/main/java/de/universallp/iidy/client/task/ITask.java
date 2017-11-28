@@ -1,6 +1,6 @@
 package de.universallp.iidy.client.task;
 
-import net.minecraft.client.resources.I18n;
+import de.universallp.iidy.IsItDoneYet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 
@@ -53,7 +53,7 @@ public interface ITask {
         }
 
         public String getLocalizedName() {
-            return I18n.format(unlocalizedName);
+            return IsItDoneYet.proxy.translate(unlocalizedName);
         }
     }
 

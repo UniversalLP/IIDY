@@ -51,9 +51,10 @@ public class EventHandlers {
 
     @SubscribeEvent
     public void onWorldJoin(EntityJoinWorldEvent event) {
-        if (!serverTaskHandler.INITIALIZED) {
-            serverTaskHandler.setServer(FMLClientHandler.instance().getServer());
-        }
+        if (!event.getWorld().isRemote)
+            if (!serverTaskHandler.INITIALIZED) {
+                serverTaskHandler.setServer(FMLClientHandler.instance().getServer());
+            }
    }
 
     @SubscribeEvent

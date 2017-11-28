@@ -2,9 +2,15 @@ package de.universallp.iidy.client;
 
 import de.universallp.iidy.core.handler.EventHandlers;
 import de.universallp.iidy.core.CommonProxy;
+import de.universallp.iidy.core.network.PacketHandler;
+import de.universallp.iidy.core.network.messages.MessageListTasks;
+import de.universallp.iidy.core.network.messages.MessageModifyTask;
+import de.universallp.iidy.core.network.messages.MessageOpenBlockStateGui;
+import de.universallp.iidy.core.network.messages.MessageRequestList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraftforge.common.MinecraftForge;
@@ -13,6 +19,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -34,6 +41,17 @@ public class ClientProxy extends CommonProxy {
 
     public static ITooltipFlag getToolTipFlags() {
         return ClientProxy.mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL;
+    }
+
+    @Override
+    public void registerMessages() {
+        super.registerMessages();
+        PacketHandler.INSTANCE.registerMessage(MessageListTasks.class, MessageListTasks.class, 1, Side.CLIENT);
+    }
+
+    @Override
+    public String translate(String s, Object... args) {
+        return I18n.format(s, args);
     }
 
     @Override

@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class MessageListTasks implements IMessage, IMessageHandler<MessageListTasks, IMessage> {
 
-    private List<ITask> tasks;
+    public List<ITask> tasks;
 
     public MessageListTasks() { }
 
