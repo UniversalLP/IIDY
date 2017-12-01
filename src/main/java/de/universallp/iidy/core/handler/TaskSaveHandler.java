@@ -32,9 +32,7 @@ public class TaskSaveHandler extends WorldSavedData
         super(DATA_NAME);
     }
 
-    public TaskSaveHandler(String s) { // Required, otherwise you'll get a runtime exception
-        super(s);
-    }
+    public TaskSaveHandler(String name) { super(name); } // Must stay
 
     public Map<String, List<ITask>> getActiveTasks() {
         return activeTasks;
@@ -54,7 +52,7 @@ public class TaskSaveHandler extends WorldSavedData
 
     public void init() {
         if (activeTasks == null)
-            activeTasks = new HashMap<String, List<ITask>>();
+            activeTasks = new HashMap<>();
     }
 
     @Override
@@ -63,13 +61,13 @@ public class TaskSaveHandler extends WorldSavedData
             return;
 
         if (nbt.hasKey("IIDY-Players")) {
-            FMLLog.log(IsItDoneYet.MODID, Level.INFO, "[IIDY] Starting task loading...");
+            IsItDoneYet.proxy.log.debug("Starting task loading...");
 
             NBTTagList playerList = nbt.getTagList("IIDY-Players", 10);
             NBTTagList playerTasks;
             NBTTagCompound taskNBT;
             NBTTagCompound listCompound;
-            activeTasks = new HashMap<String, List<ITask>>();
+            activeTasks = new HashMap<>();
             List<ITask> taskList = new ArrayList<ITask>();
             ITask tempTask = null;
 

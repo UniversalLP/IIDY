@@ -1,12 +1,10 @@
 package de.universallp.iidy.client;
 
-import de.universallp.iidy.core.handler.EventHandlers;
+import de.universallp.iidy.client.gui.GuiListTasks;
+import de.universallp.iidy.client.task.ITask;
+import de.universallp.iidy.core.handler.ClientEventHandler;
+import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.CommonProxy;
-import de.universallp.iidy.core.network.PacketHandler;
-import de.universallp.iidy.core.network.messages.MessageListTasks;
-import de.universallp.iidy.core.network.messages.MessageModifyTask;
-import de.universallp.iidy.core.network.messages.MessageOpenBlockStateGui;
-import de.universallp.iidy.core.network.messages.MessageRequestList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -14,14 +12,16 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+
+import java.util.List;
 
 /**
  * Created by universal on 28.11.2016 15:48.
@@ -46,7 +46,11 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void registerMessages() {
         super.registerMessages();
-        PacketHandler.INSTANCE.registerMessage(MessageListTasks.class, MessageListTasks.class, 1, Side.CLIENT);
+    }
+
+    @Override
+    public void openListGui(List<ITask> tasks) {
+        FMLClientHandler.instance().displayGuiScreen(ClientProxy.mc.player, new GuiListTasks(tasks));
     }
 
     @Override
@@ -63,7 +67,7 @@ public class ClientProxy extends CommonProxy {
     public void init(FMLInitializationEvent e) {
         super.init(e);
         ClientRegistry.registerKeyBinding(KEY_MAKE_TASK);
-        MinecraftForge.EVENT_BUS.register(new EventHandlers());
+        MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
     }
 
     @Override

@@ -26,6 +26,7 @@ public class ServerTaskHandler {
         CAN_SAVE = true;
     }
 
+
     public void addTask(ITask t) {
         t.setTaskID(nextTaskID);
         if (taskSaves.getActiveTasks().containsKey(t.getOwnerUUID())) {
@@ -46,7 +47,6 @@ public class ServerTaskHandler {
         if (!INITIALIZED)
             return;
         List<ITask> playerTasks = taskSaves.getActiveTasks().get(playerID);
-
         if (playerTasks != null && playerTasks.size() > 0) {
             int i = 0;
             for (ITask t : playerTasks) {

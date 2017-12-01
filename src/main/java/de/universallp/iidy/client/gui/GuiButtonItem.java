@@ -1,27 +1,19 @@
 package de.universallp.iidy.client.gui;
 
-import com.google.common.collect.ImmutableList;
 import de.universallp.iidy.client.ClientProxy;
-import de.universallp.iidy.core.handler.EventHandlers;
-import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.IBlockState;
+import de.universallp.iidy.core.handler.ClientEventHandler;
+import de.universallp.iidy.core.handler.ServerEventHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.gui.inventory.GuiBeacon;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemSaddle;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -98,7 +90,7 @@ public class GuiButtonItem extends GuiButton {
     public void drawButton(Minecraft mc, int mouseX, int mouseY, float pT) {
         if (this.visible)  {
             hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-            EventHandlers.skipClick = hovered;
+            ClientEventHandler.skipClick = hovered;
             mc.getTextureManager().bindTexture(GuiInventoryTask.bg);;
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

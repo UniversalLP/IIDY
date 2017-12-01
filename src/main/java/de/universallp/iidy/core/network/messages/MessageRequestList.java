@@ -1,7 +1,7 @@
 package de.universallp.iidy.core.network.messages;
 
 import de.universallp.iidy.client.task.ITask;
-import de.universallp.iidy.core.handler.EventHandlers;
+import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.network.PacketHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,11 +36,11 @@ public class MessageRequestList  implements IMessage, IMessageHandler<MessageReq
     @Override
     public IMessage onMessage(MessageRequestList message, MessageContext ctx) {
         EntityPlayer pl = ctx.getServerHandler().player;
-        List<ITask> tasks = EventHandlers.serverTaskHandler.getTasksForPlayer(pl.getUniqueID().toString());
+        List<ITask> tasks = ServerEventHandler.serverTaskHandler.getTasksForPlayer(pl.getUniqueID().toString());
         if (tasks != null)
             PacketHandler.INSTANCE.sendTo(new MessageListTasks(tasks), (EntityPlayerMP) pl);
         else
-            PacketHandler.INSTANCE.sendTo(new MessageListTasks(new ArrayList<ITask>()), (EntityPlayerMP) pl);
+            PacketHandler.INSTANCE.sendTo(new MessageListTasks(new ArrayList<>()), (EntityPlayerMP) pl);
 
         return null;
     }

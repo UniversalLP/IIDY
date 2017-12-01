@@ -4,7 +4,8 @@ import de.universallp.iidy.IsItDoneYet;
 import de.universallp.iidy.client.ClientProxy;
 import de.universallp.iidy.client.task.ITask;
 import de.universallp.iidy.client.task.InventoryTask;
-import de.universallp.iidy.core.handler.EventHandlers;
+import de.universallp.iidy.core.handler.ClientEventHandler;
+import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.network.PacketHandler;
 import de.universallp.iidy.core.network.messages.MessageModifyTask;
 import net.minecraft.client.Minecraft;
@@ -135,7 +136,7 @@ public class GuiInventoryTask extends GuiScreen {
             mc.mouseHelper.grabMouseCursor();
             InventoryTask.CompareType c = InventoryTask.CompareType.values()[btnCycle.getIndex()];
             PacketHandler.INSTANCE.sendToServer(new MessageModifyTask(targetDim, targetPos, btnItem.getDisplayStack(), slotTextbox.getValue(), taskMsg.getText(), c));
-            EventHandlers.currentTask = ITask.TaskType.NONE;
+            ClientEventHandler.currentTask = ITask.TaskType.NONE;
         }
     }
 

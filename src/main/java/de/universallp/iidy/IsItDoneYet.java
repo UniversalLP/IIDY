@@ -2,7 +2,8 @@ package de.universallp.iidy;
 
 import de.universallp.iidy.core.CommonProxy;
 import de.universallp.iidy.core.ServerTaskHandler;
-import de.universallp.iidy.core.handler.EventHandlers;
+import de.universallp.iidy.core.handler.ServerEventHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -37,7 +38,11 @@ public class IsItDoneYet {
 
     @Mod.EventHandler
     public void onServerStart(FMLServerAboutToStartEvent e) {
-        EventHandlers.serverTaskHandler = new ServerTaskHandler();
+        ServerEventHandler.serverTaskHandler = new ServerTaskHandler();
     }
 
+    @Mod.EventHandler
+    public void onServerStarted(FMLServerStartedEvent e) {
+        ServerEventHandler.serverTaskHandler.setServer(FMLCommonHandler.instance().getMinecraftServerInstance());
+    }
 }

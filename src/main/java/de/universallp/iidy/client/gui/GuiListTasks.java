@@ -11,9 +11,14 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.IInteractionObject;
 import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
@@ -25,7 +30,7 @@ import java.util.List;
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
  * github.com/univrsal/IIDY
  */
-public class GuiListTasks extends GuiScreen {
+public class GuiListTasks extends GuiScreen implements IInteractionObject {
     private static final int bgColor = 0xFFC6C6C6;
 
     private List<ITask> tasks;
@@ -183,5 +188,35 @@ public class GuiListTasks extends GuiScreen {
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableDepth();
         mc.fontRenderer.drawStringWithShadow(String.valueOf(s.getCount()), x + (s.getCount() > 9 ? 7 : 12), y + 10, 0xFFFFFF);
+    }
+
+    @Override
+    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
+    {
+        return null;
+    }
+
+    @Override
+    public String getGuiID()
+    {
+        return "IIDY-Tasks";
+    }
+
+    @Override
+    public String getName()
+    {
+        return "IIDY-Task-List";
+    }
+
+    @Override
+    public boolean hasCustomName()
+    {
+        return false;
+    }
+
+    @Override
+    public ITextComponent getDisplayName()
+    {
+        return null;
     }
 }

@@ -3,8 +3,8 @@ package de.universallp.iidy.client.gui;
 import de.universallp.iidy.IsItDoneYet;
 import de.universallp.iidy.client.ClientProxy;
 import de.universallp.iidy.client.task.ITask;
-import de.universallp.iidy.client.task.InventoryTask;
-import de.universallp.iidy.core.handler.EventHandlers;
+import de.universallp.iidy.core.handler.ClientEventHandler;
+import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.network.PacketHandler;
 import de.universallp.iidy.core.network.messages.MessageModifyTask;
 import net.minecraft.block.Block;
@@ -15,7 +15,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -114,7 +113,7 @@ public class GuiBlockStateTask extends GuiContainer {
             mc.player.closeScreen();
             mc.mouseHelper.grabMouseCursor();
             PacketHandler.INSTANCE.sendToServer(new MessageModifyTask(mc.player.dimension, mc.objectMouseOver.getBlockPos(), btnState.getDisplayStack(), taskMsg.getText()));
-            EventHandlers.currentTask = ITask.TaskType.NONE;
+            ClientEventHandler.currentTask = ITask.TaskType.NONE;
         }
     }
 

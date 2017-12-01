@@ -1,10 +1,15 @@
+/**
+ * Created by universal on 01.12.2017 13:23
+ * This file is part of IIDY which is licenced
+ * under the MOZILLA PUBLIC LICENCE 2.0 - mozilla.org/en-US/MPL/2.0/
+ * github.com/univrsal/IIDY
+ */
 package de.universallp.iidy.core.handler;
 
 import de.universallp.iidy.client.ClientProxy;
 import de.universallp.iidy.client.gui.GuiInventoryTask;
 import de.universallp.iidy.client.gui.GuiSelectTask;
 import de.universallp.iidy.client.task.ITask;
-import de.universallp.iidy.core.ServerTaskHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -14,13 +19,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.items.CapabilityItemHandler;
 import org.lwjgl.input.Keyboard;
@@ -28,34 +30,12 @@ import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
 
-
-/**
- * Created by universal on 28.11.2016 15:35.
- * This file is part of IIDY which is licenced
- * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
- * github.com/univrsal/IIDY
- */
-public class EventHandlers {
+public class ClientEventHandler {
     public static boolean skipClick = false;
     public static ITask.TaskType currentTask = ITask.TaskType.NONE;
     public static BlockPos current_target;
     public static int current_dimension = 0;
     private static GuiInventoryTask guiInventoryTask;
-    public static ServerTaskHandler serverTaskHandler;
-
-    @SubscribeEvent
-    public void onServerTick(TickEvent.ServerTickEvent e) {
-        if (serverTaskHandler != null && !serverTaskHandler.isIdle())
-            serverTaskHandler.updateTasks();
-    }
-
-    @SubscribeEvent
-    public void onWorldJoin(EntityJoinWorldEvent event) {
-        if (!event.getWorld().isRemote)
-            if (!serverTaskHandler.INITIALIZED) {
-                serverTaskHandler.setServer(FMLClientHandler.instance().getServer());
-            }
-   }
 
     @SubscribeEvent
     public void onKeyDown(InputEvent.KeyInputEvent e) {

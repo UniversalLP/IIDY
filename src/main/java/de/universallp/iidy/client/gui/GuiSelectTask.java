@@ -3,7 +3,8 @@ package de.universallp.iidy.client.gui;
 import de.universallp.iidy.IsItDoneYet;
 import de.universallp.iidy.client.ClientProxy;
 import de.universallp.iidy.client.task.ITask;
-import de.universallp.iidy.core.handler.EventHandlers;
+import de.universallp.iidy.core.handler.ClientEventHandler;
+import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.network.PacketHandler;
 import de.universallp.iidy.core.network.messages.MessageOpenBlockStateGui;
 import de.universallp.iidy.core.network.messages.MessageRequestList;
@@ -18,11 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.FMLNetworkException;
-import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 
-import javax.swing.text.html.HTMLDocument;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -78,12 +75,12 @@ public class GuiSelectTask extends GuiScreen {
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
         if (button.id == 0) {
-            EventHandlers.currentTask = ITask.TaskType.INVENTORY_SLOT;
+            ClientEventHandler.currentTask = ITask.TaskType.INVENTORY_SLOT;
             ClientProxy.mc.currentScreen = null;
             EntityPlayerSP p = Minecraft.getMinecraft().player;
             ClientProxy.mc.playerController.processRightClickBlock(p, FMLClientHandler.instance().getWorldClient(), blockPos, face, Vec3d.ZERO, EnumHand.MAIN_HAND);
         } else if (button.id == 1) {
-            EventHandlers.currentTask = ITask.TaskType.BLOCK_STATE;
+            ClientEventHandler.currentTask = ITask.TaskType.BLOCK_STATE;
             //Minecraft.getMinecraft().currentScreen = null;
             PacketHandler.INSTANCE.sendToServer(new MessageOpenBlockStateGui());
         } else if (button.id == 2) {
@@ -129,6 +126,6 @@ public class GuiSelectTask extends GuiScreen {
     @Override
     public void onGuiClosed() {
         super.onGuiClosed();
-        EventHandlers.currentTask = ITask.TaskType.NONE;
+        ClientEventHandler.currentTask = ITask.TaskType.NONE;
     }
 }

@@ -3,7 +3,7 @@ package de.universallp.iidy.core.network.messages;
 import de.universallp.iidy.client.task.BlockStateTask;
 import de.universallp.iidy.client.task.ITask;
 import de.universallp.iidy.client.task.InventoryTask;
-import de.universallp.iidy.core.handler.EventHandlers;
+import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.network.PacketHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -59,6 +59,7 @@ public class MessageModifyTask implements IMessage, IMessageHandler<MessageModif
     @Override
     public void fromBytes(ByteBuf buf) {
         taskType = ITask.TaskType.values()[buf.readInt()];
+        System.out.println("TASK OUT: " + taskType.ordinal());
         if (taskType == ITask.TaskType.INVENTORY_SLOT) {
             targetDim = buf.readInt();
             targetSlot = buf.readInt();
@@ -79,6 +80,7 @@ public class MessageModifyTask implements IMessage, IMessageHandler<MessageModif
     @Override
     public void toBytes(ByteBuf buf) {
         buf.writeInt(taskType.ordinal());
+        System.out.println("TASK IN: " + taskType.ordinal());
         if (taskType == ITask.TaskType.INVENTORY_SLOT) {
             buf.writeInt(targetDim);
             buf.writeInt(targetSlot);
@@ -101,11 +103,11 @@ public class MessageModifyTask implements IMessage, IMessageHandler<MessageModif
         EntityPlayer pl = ctx.getServerHandler().player;
 
         if (message.taskType == ITask.TaskType.INVENTORY_SLOT) {
-            EventHandlers.serverTaskHandler.addTask(new InventoryTask(message.targetDim, pl.getUniqueID().toString(), message.targetPos, message.targetStack, message.targetSlot, message.finishMsg, message.comparettype));
+            ServerEventHandler.serverTaskHandler.addTask(new InventoryTask(message.targetDim, pl.getUniqueID().toString(), message.targetPos, message.targetStack, message.targetSlot, message.finishMsg, message.comparettype));
         } else if (message.taskType == ITask.TaskType.DELETE) {
-            EventHandlers.serverTaskHandler.tryRemoveTask(message.taskID, pl.getUniqueID().toString());
+            ServerEventHandler.serverTaskHandler.tryRemoveTask(message.taskID, pl.getUniqueID().toString());
         } else if (message.taskType == ITask.TaskType.BLOCK_STATE) {
-            EventHandlers.serverTaskHandler.addTask(new BlockStateTask(message.targetDim, message.targetPos, message.targetStack, message.finishMsg, pl.getUniqueID().toString()));
+            ServerEventHandler.serverTaskHandler.addTask(new BlockStateTask(message.targetDim, message.targetPos, message.targetStack, message.finishMsg, pl.getUniqueID().toString()));
         }
         return null;
     }

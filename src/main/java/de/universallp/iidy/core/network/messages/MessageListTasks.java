@@ -1,5 +1,6 @@
 package de.universallp.iidy.core.network.messages;
 
+import de.universallp.iidy.IsItDoneYet;
 import de.universallp.iidy.client.ClientProxy;
 import de.universallp.iidy.client.gui.GuiListTasks;
 import de.universallp.iidy.client.task.BlockStateTask;
@@ -22,7 +23,8 @@ import java.util.List;
  * under the MOZILLA PUBLIC LICENSE 2.0 - mozilla.org/en-US/MPL/2.0/
  * github.com/univrsal/IIDY
  */
-public class MessageListTasks implements IMessage, IMessageHandler<MessageListTasks, IMessage> {
+public class MessageListTasks implements IMessage, IMessageHandler<MessageListTasks, IMessage>
+{
 
     public List<ITask> tasks;
 
@@ -75,7 +77,7 @@ public class MessageListTasks implements IMessage, IMessageHandler<MessageListTa
 
     @Override
     public IMessage onMessage(MessageListTasks message, MessageContext ctx) {
-        FMLClientHandler.instance().displayGuiScreen(ClientProxy.mc.player, new GuiListTasks(message.tasks));
+        IsItDoneYet.proxy.openListGui(message.tasks);
         return null;
     }
 }
