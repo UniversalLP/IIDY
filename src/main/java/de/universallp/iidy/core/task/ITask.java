@@ -1,6 +1,7 @@
-package de.universallp.iidy.client.task;
+package de.universallp.iidy.core.task;
 
 import de.universallp.iidy.IsItDoneYet;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 
@@ -31,6 +32,8 @@ public interface ITask {
     float getProgress();
 
     void setProgress(float f);
+
+    ItemStack getIcon();
 
     String getOwnerUUID();
 

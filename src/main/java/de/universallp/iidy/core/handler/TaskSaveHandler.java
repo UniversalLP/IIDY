@@ -1,14 +1,17 @@
 package de.universallp.iidy.core.handler;
 
 import de.universallp.iidy.IsItDoneYet;
-import de.universallp.iidy.client.task.ITask;
-import de.universallp.iidy.client.task.InventoryTask;
+import de.universallp.iidy.core.task.BlockStateTask;
+import de.universallp.iidy.core.task.ITask;
+import de.universallp.iidy.core.task.InventoryTask;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.server.FMLServerHandler;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
@@ -40,7 +43,6 @@ public class TaskSaveHandler extends WorldSavedData
 
     public static TaskSaveHandler get(World w) {
         MapStorage storage =  w.getMapStorage();
-
         TaskSaveHandler instance = (TaskSaveHandler) storage.getOrLoadData(TaskSaveHandler.class, DATA_NAME);
         if (instance == null) {
             instance = new TaskSaveHandler();
@@ -84,7 +86,7 @@ public class TaskSaveHandler extends WorldSavedData
                     continue;
 
                 for (int b = 0; b < playerTasks.tagCount(); b++) {
-                    taskNBT = playerTasks.getCompoundTagAt(i);
+                    taskNBT = playerTasks.getCompoundTagAt(b);
 
                     if (!taskNBT.hasKey("TaskType"))
                         continue;
@@ -94,12 +96,13 @@ public class TaskSaveHandler extends WorldSavedData
                     switch (type) {
                         case INVENTORY_SLOT:
                             tempTask = new InventoryTask();
-                            tempTask.readFromNBT(taskNBT);
                             break;
                         case BLOCK_STATE:
+                            tempTask = new BlockStateTask();
                             break;
                     }
 
+                    tempTask.readFromNBT(taskNBT);
                     taskList.add(tempTask);
                 }
 
@@ -116,7 +119,8 @@ public class TaskSaveHandler extends WorldSavedData
         NBTTagList taskList = new NBTTagList();
         NBTTagList players  = new NBTTagList();
         NBTTagCompound listCompound;
-        FMLLog.log(IsItDoneYet.MODID, Level.INFO, "[IIDY] Starting task saving...");
+
+        IsItDoneYet.proxy.log.info("Starting task saving...");
 
         for (String player : activeTasks.keySet()) {
             taskList = new NBTTagList();

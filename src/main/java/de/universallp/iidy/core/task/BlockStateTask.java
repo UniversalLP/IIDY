@@ -1,4 +1,4 @@
-package de.universallp.iidy.client.task;
+package de.universallp.iidy.core.task;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import de.universallp.iidy.IsItDoneYet;
@@ -39,6 +39,10 @@ public class BlockStateTask implements ITask {
 
     private int taskID;
 
+    public BlockStateTask() {
+
+    }
+
     public BlockStateTask(int dim, BlockPos targetBlock, ItemStack targetState, String msg, String targetUUID) {
         this.dim = dim;
         this.targetBlock = Block.getBlockFromItem(targetState.getItem());
@@ -69,16 +73,13 @@ public class BlockStateTask implements ITask {
             MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
             PlayerList pl = s.getPlayerList();
             EntityPlayerMP p = pl.getPlayerByUUID(UUID.fromString(targetPlayerUUID));
-
-            p.sendMessage(new TextComponentString(ChatFormatting.DARK_GREEN + "[IIDY] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
+            if (p != null && finishMsg != null)
+                p.sendMessage(new TextComponentString(ChatFormatting.DARK_GREEN + "[IIDY] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
+            else
+                IsItDoneYet.proxy.log.error("Error while sending notifaction to player!");
         } else
             FMLServerHandler.instance().getServer().getPlayerList().getPlayerByUUID(UUID.fromString(targetPlayerUUID)).sendMessage(new TextComponentString(ChatFormatting.DARK_RED + "[IIDY Task Failed] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
     }
-
-    public ItemStack getTargetState() {
-        return new ItemStack(targetBlock, 1, targetMeta);
-    }
-
     @Override
     public TaskResult isDone() {
         World w = IsItDoneYet.proxy.getWorldFromDimension(dim);
@@ -119,6 +120,11 @@ public class BlockStateTask implements ITask {
     }
 
     @Override
+    public ItemStack getIcon() {
+        return new ItemStack(targetBlock, 1, targetMeta);
+    }
+
+    @Override
     public String getOwnerUUID() {
         return targetPlayerUUID;
     }
@@ -140,7 +146,7 @@ public class BlockStateTask implements ITask {
         tag.setInteger("Dim", dim);
 
         NBTTagCompound stackTag = new NBTTagCompound();
-        new ItemStack(targetBlock, 1, targetMeta).writeToNBT(stackTag);
+        stackTag = getIcon().writeToNBT(stackTag);
         tag.setTag("TargetStack", stackTag);
 
         tag.setString("FinishMsg", finishMsg);

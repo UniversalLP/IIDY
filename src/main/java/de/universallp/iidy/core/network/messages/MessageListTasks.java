@@ -1,14 +1,11 @@
 package de.universallp.iidy.core.network.messages;
 
 import de.universallp.iidy.IsItDoneYet;
-import de.universallp.iidy.client.ClientProxy;
-import de.universallp.iidy.client.gui.GuiListTasks;
-import de.universallp.iidy.client.task.BlockStateTask;
-import de.universallp.iidy.client.task.ITask;
-import de.universallp.iidy.client.task.InventoryTask;
+import de.universallp.iidy.core.task.BlockStateTask;
+import de.universallp.iidy.core.task.ITask;
+import de.universallp.iidy.core.task.InventoryTask;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -62,13 +59,13 @@ public class MessageListTasks implements IMessage, IMessageHandler<MessageListTa
         for (ITask t : tasks) {
             buf.writeInt(t.getType().ordinal());
             if (t.getType() == ITask.TaskType.INVENTORY_SLOT) {
-                ByteBufUtils.writeItemStack(buf, ((InventoryTask) t).getTargetStack());
+                ByteBufUtils.writeItemStack(buf, t.getIcon());
                 buf.writeInt(((InventoryTask) t).getTargetSlot());
                 ByteBufUtils.writeUTF8String(buf, t.getFinishMessage());
                 buf.writeInt(t.getTaskID());
                 buf.writeFloat(t.getProgress());
             } else if (t.getType() == ITask.TaskType.BLOCK_STATE) {
-                ByteBufUtils.writeItemStack(buf, ((BlockStateTask) t).getTargetState());
+                ByteBufUtils.writeItemStack(buf, t.getIcon());
                 ByteBufUtils.writeUTF8String(buf, t.getFinishMessage());
                 buf.writeInt(t.getTaskID());
             }

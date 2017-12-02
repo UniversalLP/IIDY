@@ -2,12 +2,14 @@ package de.universallp.iidy.client.gui;
 
 import de.universallp.iidy.IsItDoneYet;
 import de.universallp.iidy.client.ClientProxy;
-import de.universallp.iidy.client.task.ITask;
-import de.universallp.iidy.client.task.InventoryTask;
+import de.universallp.iidy.client.gui.elements.GuiButtonCycle;
+import de.universallp.iidy.client.gui.elements.GuiButtonItem;
+import de.universallp.iidy.client.gui.elements.GuiNumberField;
 import de.universallp.iidy.core.handler.ClientEventHandler;
-import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.network.PacketHandler;
 import de.universallp.iidy.core.network.messages.MessageModifyTask;
+import de.universallp.iidy.core.task.ITask;
+import de.universallp.iidy.core.task.InventoryTask;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -32,7 +34,7 @@ import java.io.IOException;
  */
 public class GuiInventoryTask extends GuiScreen {
 
-    static ResourceLocation bg = new ResourceLocation(IsItDoneYet.MODID, "textures/gui/task.png");
+    public static ResourceLocation bg = new ResourceLocation(IsItDoneYet.MODID, "textures/gui/task.png");
 
     private GuiButtonItem btnItem;
     private GuiNumberField slotTextbox;
@@ -57,6 +59,7 @@ public class GuiInventoryTask extends GuiScreen {
 
     public GuiInventoryTask(BlockPos target, int dimension, Container parent, GuiContainer parentScreen) {
         this.mc = ClientProxy.mc;
+
         this.targetDim = dimension;
         this.targetPos = target;
         this.parentContainer = parent;
@@ -119,7 +122,7 @@ public class GuiInventoryTask extends GuiScreen {
 
         if (mouseButton > 99) { // 100 & 101 for scrolling
             if (btnItem.isMouseOver())
-                btnItem.scroll(mouseButton == 100);
+                btnItem.scrollSize(mouseButton == 100);
         }
         slotTextbox.mouseClicked(mouseX, mouseY, mouseButton);
         taskMsg.mouseClicked(mouseX, mouseY, mouseButton);
@@ -135,7 +138,7 @@ public class GuiInventoryTask extends GuiScreen {
             mc.player.closeScreen();
             mc.mouseHelper.grabMouseCursor();
             InventoryTask.CompareType c = InventoryTask.CompareType.values()[btnCycle.getIndex()];
-            PacketHandler.INSTANCE.sendToServer(new MessageModifyTask(targetDim, targetPos, btnItem.getDisplayStack(), slotTextbox.getValue(), taskMsg.getText(), c));
+            PacketHandler.INSTANCE.sendToServer(new MessageModifyTask(targetDim, targetPos, btnItem.getTargetStack(), slotTextbox.getValue(), taskMsg.getText(), c));
             ClientEventHandler.currentTask = ITask.TaskType.NONE;
         }
     }

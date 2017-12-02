@@ -1,7 +1,7 @@
 package de.universallp.iidy.core;
 
 import de.universallp.iidy.IsItDoneYet;
-import de.universallp.iidy.client.task.ITask;
+import de.universallp.iidy.core.task.ITask;
 import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.network.PacketHandler;
 import de.universallp.iidy.core.network.messages.*;

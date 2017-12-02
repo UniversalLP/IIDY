@@ -1,8 +1,10 @@
-package de.universallp.iidy.client.gui;
+package de.universallp.iidy.client.gui.elements;
 
 import de.universallp.iidy.client.ClientProxy;
+import de.universallp.iidy.client.gui.GuiInventoryTask;
 import de.universallp.iidy.core.handler.ClientEventHandler;
 import de.universallp.iidy.core.handler.ServerEventHandler;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -26,7 +28,6 @@ public class GuiButtonItem extends GuiButton {
 
     protected ItemStack displayStack = new ItemStack(Blocks.STONE, 1);
 
-
     public GuiButtonItem(int buttonId, int x, int y) {
         super(buttonId, x, y, "");
         setWidth(19);
@@ -36,15 +37,13 @@ public class GuiButtonItem extends GuiButton {
     @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
         if (super.mousePressed(mc, mouseX, mouseY)) {
-            if (!mc.player.inventory.getItemStack().isEmpty()) {
-                displayStack = mc.player.inventory.getItemStack().copy();
-                return true;
-            }
+            displayStack = mc.player.inventory.getItemStack().copy();
+            return true;
         }
         return false;
     }
 
-    public ItemStack getDisplayStack() {
+    public ItemStack getTargetStack() {
         return displayStack;
     }
 
@@ -52,7 +51,7 @@ public class GuiButtonItem extends GuiButton {
         this.displayStack = displayStack;
     }
 
-    public void scroll(boolean up) {
+    public void scrollSize(boolean up) {
         if (up) {
             if (displayStack.getMaxStackSize() >= displayStack.getCount() + 1)
                 displayStack.grow(1);

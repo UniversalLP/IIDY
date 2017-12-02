@@ -1,4 +1,4 @@
-package de.universallp.iidy.client.task;
+package de.universallp.iidy.core.task;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import de.universallp.iidy.IsItDoneYet;
@@ -132,6 +132,11 @@ public class InventoryTask implements ITask {
     }
 
     @Override
+    public ItemStack getIcon() {
+        return new ItemStack(targetStack);
+    }
+
+    @Override
     public String getOwnerUUID() {
         return targetPlayerUUID;
     }
@@ -197,11 +202,6 @@ public class InventoryTask implements ITask {
         if (tag.hasKey("ID"))
             this.taskID = tag.getInteger("ID");
     }
-
-    public ItemStack getTargetStack() {
-        return new ItemStack(targetStack);
-    }
-
     public int getTargetSlot() {
         return targetSlot;
     }

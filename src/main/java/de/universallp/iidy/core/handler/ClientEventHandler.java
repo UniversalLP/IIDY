@@ -9,7 +9,7 @@ package de.universallp.iidy.core.handler;
 import de.universallp.iidy.client.ClientProxy;
 import de.universallp.iidy.client.gui.GuiInventoryTask;
 import de.universallp.iidy.client.gui.GuiSelectTask;
-import de.universallp.iidy.client.task.ITask;
+import de.universallp.iidy.core.task.ITask;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;

@@ -1,5 +1,6 @@
-package de.universallp.iidy.client.gui;
+package de.universallp.iidy.client.gui.elements;
 
+import de.universallp.iidy.IsItDoneYet;
 import de.universallp.iidy.client.ClientProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -30,7 +31,7 @@ import java.util.List;
  */
 public class GuiButtonBlockState extends GuiButtonItem {
 
-    private static final String MISSING_NO = TextureMap.LOCATION_MISSING_TEXTURE.getResourcePath();
+    public static final String MISSING_NO = TextureMap.LOCATION_MISSING_TEXTURE.getResourcePath();
 
     private List<IProperty<?>> properties;
     private IBlockState resultState = Blocks.STONE.getDefaultState();
@@ -71,12 +72,17 @@ public class GuiButtonBlockState extends GuiButtonItem {
      * shows the missing texture
      * @param s
      */
-    private static boolean checkValidModel(ItemStack s) {
+    public static boolean checkValidModel(ItemStack s) {
         IBakedModel bM;
         RenderItem rI = ClientProxy.mc.getRenderItem();
         bM = rI.getItemModelWithOverrides(s, null, null);
 
         return !bM.getParticleTexture().getIconName().equals(MISSING_NO);
+    }
+
+    @Override
+    public ItemStack getTargetStack() {
+        return new ItemStack(resultState.getBlock(), 1, resultState.getBlock().getMetaFromState(resultState));
     }
 
     @Override
@@ -113,6 +119,7 @@ public class GuiButtonBlockState extends GuiButtonItem {
 
             if (b.equals(Blocks.AIR)) {
                 properties = new ArrayList<IProperty<?>>();
+                displayStack = ItemStack.EMPTY;
             } else {
                 Collection<IProperty<?>> coll = b.getBlockState().getProperties();
                 if (coll instanceof List)
@@ -163,7 +170,10 @@ public class GuiButtonBlockState extends GuiButtonItem {
                 i++;
             }
 
-            line = TextFormatting.GRAY + "" + TextFormatting.ITALIC + I18n.format("iidy.lbl.ctrlfordesc");
+            line = TextFormatting.GRAY + "" + TextFormatting.ITALIC + IsItDoneYet.proxy.translate("iidy.lbl.info");
+            offset = f.getStringWidth(line) > offset ? f.getStringWidth(line) : offset;
+            list.add(line);
+            line = TextFormatting.GRAY + "" + TextFormatting.ITALIC + IsItDoneYet.proxy.translate("iidy.lbl.ctrlfordesc");
             offset = f.getStringWidth(line) > offset ? f.getStringWidth(line) : offset;
 
             xPos = x - offset - width - 5;

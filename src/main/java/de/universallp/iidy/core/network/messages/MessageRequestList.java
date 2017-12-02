@@ -1,6 +1,6 @@
 package de.universallp.iidy.core.network.messages;
 
-import de.universallp.iidy.client.task.ITask;
+import de.universallp.iidy.core.task.ITask;
 import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.network.PacketHandler;
 import io.netty.buffer.ByteBuf;

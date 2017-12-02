@@ -2,9 +2,9 @@ package de.universallp.iidy.client.gui;
 
 import de.universallp.iidy.IsItDoneYet;
 import de.universallp.iidy.client.ClientProxy;
-import de.universallp.iidy.client.task.ITask;
+import de.universallp.iidy.client.gui.elements.GuiButtonBlockState;
+import de.universallp.iidy.core.task.ITask;
 import de.universallp.iidy.core.handler.ClientEventHandler;
-import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.network.PacketHandler;
 import de.universallp.iidy.core.network.messages.MessageModifyTask;
 import net.minecraft.block.Block;
@@ -14,7 +14,6 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -36,7 +35,6 @@ public class GuiBlockStateTask extends GuiContainer {
     public static ResourceLocation bg = new ResourceLocation(IsItDoneYet.MODID, "textures/gui/blockstate.png");
     private final IInventory playerInventory;
 
-    private ItemStack targetStateStack = new ItemStack(Blocks.STONE, 1);
     private GuiTextField taskMsg;
     private GuiButton btnAccept;
     private GuiButtonBlockState btnState;
@@ -62,7 +60,7 @@ public class GuiBlockStateTask extends GuiContainer {
 
         ItemStack oldStack = ItemStack.EMPTY;
         if (btnState != null)
-            oldStack = btnState.getDisplayStack();
+            oldStack = btnState.getTargetStack();
 
         btnState = new GuiButtonBlockState(2, guiLeft + 138, guiTop + 21);
 
@@ -70,9 +68,7 @@ public class GuiBlockStateTask extends GuiContainer {
         Block hoveredBlock = hoveredState.getBlock();
         ItemStack stackFromHoveredBlock = new ItemStack(hoveredBlock, 1, hoveredBlock.getMetaFromState(hoveredState));
 
-
         btnState.setDisplayStack(stackFromHoveredBlock);
-        btnState.setResultState(hoveredState);
 
         if (!oldStack.isEmpty())
             btnState.setDisplayStack(oldStack);
@@ -90,12 +86,16 @@ public class GuiBlockStateTask extends GuiContainer {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         GlStateManager.disableLighting();
         GlStateManager.disableBlend();
         taskMsg.drawTextBox();
         btnState.drawTooltips(mouseX, mouseY);
+        this.renderHoveredToolTip(mouseX, mouseY);
     }
+
+
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -110,11 +110,16 @@ public class GuiBlockStateTask extends GuiContainer {
     protected void actionPerformed(GuiButton button) throws IOException {
         super.actionPerformed(button);
         if (button.id == 1) {
-            mc.player.closeScreen();
-            mc.mouseHelper.grabMouseCursor();
-            PacketHandler.INSTANCE.sendToServer(new MessageModifyTask(mc.player.dimension, mc.objectMouseOver.getBlockPos(), btnState.getDisplayStack(), taskMsg.getText()));
-            ClientEventHandler.currentTask = ITask.TaskType.NONE;
-        }
+            if (taskMsg.getText().isEmpty()) {
+                taskMsg.setFocused(true);
+                taskMsg.setText(IsItDoneYet.proxy.translate("iidy.msg.required"));
+            } else {
+                mc.player.closeScreen();
+                mc.mouseHelper.grabMouseCursor();
+                PacketHandler.INSTANCE.sendToServer(new MessageModifyTask(mc.player.dimension, mc.objectMouseOver.getBlockPos(), btnState.getTargetStack(), taskMsg.getText()));
+                ClientEventHandler.currentTask = ITask.TaskType.NONE;
+            }
+       }
     }
 
     @Override
@@ -136,8 +141,9 @@ public class GuiBlockStateTask extends GuiContainer {
 
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        super.keyTyped(typedChar, keyCode);
-        taskMsg.textboxKeyTyped(typedChar, keyCode);
+        if (!this.taskMsg.textboxKeyTyped(typedChar, keyCode)) {
+            super.keyTyped(typedChar, keyCode);
+        }
     }
 
     @Override

@@ -1,9 +1,8 @@
 package de.universallp.iidy.client;
 
 import de.universallp.iidy.client.gui.GuiListTasks;
-import de.universallp.iidy.client.task.ITask;
+import de.universallp.iidy.core.task.ITask;
 import de.universallp.iidy.core.handler.ClientEventHandler;
-import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.CommonProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;

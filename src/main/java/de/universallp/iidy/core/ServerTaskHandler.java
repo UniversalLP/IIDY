@@ -1,7 +1,7 @@
 package de.universallp.iidy.core;
 
 import de.universallp.iidy.IsItDoneYet;
-import de.universallp.iidy.client.task.ITask;
+import de.universallp.iidy.core.task.ITask;
 import de.universallp.iidy.core.handler.TaskSaveHandler;
 import net.minecraft.server.MinecraftServer;
 

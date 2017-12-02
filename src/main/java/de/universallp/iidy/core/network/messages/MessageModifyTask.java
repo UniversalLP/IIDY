@@ -1,8 +1,8 @@
 package de.universallp.iidy.core.network.messages;
 
-import de.universallp.iidy.client.task.BlockStateTask;
-import de.universallp.iidy.client.task.ITask;
-import de.universallp.iidy.client.task.InventoryTask;
+import de.universallp.iidy.core.task.BlockStateTask;
+import de.universallp.iidy.core.task.ITask;
+import de.universallp.iidy.core.task.InventoryTask;
 import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.network.PacketHandler;
 import io.netty.buffer.ByteBuf;
@@ -46,7 +46,7 @@ public class MessageModifyTask implements IMessage, IMessageHandler<MessageModif
     public MessageModifyTask(int dim, BlockPos targetPos, ItemStack targetState, String finishMsg) {
         this.targetDim = dim;
         this.targetPos = targetPos;
-        this.targetStack = new ItemStack(targetState.getItem(), 1, targetState.getItemDamage()); // No need for sending nbt
+        this.targetStack = targetState;
         this.finishMsg = finishMsg;
         this.taskType = ITask.TaskType.BLOCK_STATE;
     }
@@ -59,7 +59,6 @@ public class MessageModifyTask implements IMessage, IMessageHandler<MessageModif
     @Override
     public void fromBytes(ByteBuf buf) {
         taskType = ITask.TaskType.values()[buf.readInt()];
-        System.out.println("TASK OUT: " + taskType.ordinal());
         if (taskType == ITask.TaskType.INVENTORY_SLOT) {
             targetDim = buf.readInt();
             targetSlot = buf.readInt();
@@ -72,15 +71,14 @@ public class MessageModifyTask implements IMessage, IMessageHandler<MessageModif
         } else if (taskType == ITask.TaskType.BLOCK_STATE) {
             targetDim = buf.readInt();
             finishMsg = ByteBufUtils.readUTF8String(buf);
-            targetStack = ByteBufUtils.readItemStack(buf);
             targetPos = PacketHandler.readBlockPos(buf);
+            targetStack = ByteBufUtils.readItemStack(buf);
         }
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
         buf.writeInt(taskType.ordinal());
-        System.out.println("TASK IN: " + taskType.ordinal());
         if (taskType == ITask.TaskType.INVENTORY_SLOT) {
             buf.writeInt(targetDim);
             buf.writeInt(targetSlot);
@@ -93,9 +91,9 @@ public class MessageModifyTask implements IMessage, IMessageHandler<MessageModif
         } else if (taskType == ITask.TaskType.BLOCK_STATE) {
             buf.writeInt(targetDim);
             ByteBufUtils.writeUTF8String(buf, finishMsg);
-            ByteBufUtils.writeItemStack(buf, targetStack);
             PacketHandler.writeBlockPos(buf, targetPos);
-        }
+            ByteBufUtils.writeItemStack(buf, targetStack);
+         }
     }
 
     @Override

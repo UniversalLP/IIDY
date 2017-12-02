@@ -1,4 +1,4 @@
-package de.universallp.iidy.client.gui;
+package de.universallp.iidy.client.gui.elements;
 
 import de.universallp.iidy.client.ClientProxy;
 import net.minecraft.client.Minecraft;

@@ -1,15 +1,20 @@
 package de.universallp.iidy.client.gui;
 
-import de.universallp.iidy.client.task.ITask;
-import de.universallp.iidy.client.task.InventoryTask;
+import de.universallp.iidy.client.ClientProxy;
+import de.universallp.iidy.client.gui.elements.GuiButtonBlockState;
+import de.universallp.iidy.client.gui.elements.GuiScrollBar;
+import de.universallp.iidy.core.task.ITask;
+import de.universallp.iidy.core.task.InventoryTask;
 import de.universallp.iidy.core.network.PacketHandler;
 import de.universallp.iidy.core.network.messages.MessageModifyTask;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -163,8 +168,8 @@ public class GuiListTasks extends GuiScreen implements IInteractionObject {
             t = tasks.get(i);
 
             fontRenderer.drawStringWithShadow(t.getType().getLocalizedName() + " - " + ((int)(t.getProgress() * 100)) + "% ", x + 36, yTask, 0xFFFFFF);
-            if (t instanceof InventoryTask)
-                drawStack(((InventoryTask) t).getTargetStack(), x + 13, yTask);
+            drawStack(t.getIcon(), x + 13, yTask);
+
             if (mouseX >= x + 2 && mouseX <= x + 12 && mouseY >= yTask && mouseY <= yTask + fontRenderer.FONT_HEIGHT)
                 fontRenderer.drawString("x", x + 5, yTask , 0xFF0000);
             else
@@ -182,12 +187,17 @@ public class GuiListTasks extends GuiScreen implements IInteractionObject {
     }
 
     private void drawStack(ItemStack s, int x, int y) {
+        ItemStack display = s.copy();
+
+        if (!GuiButtonBlockState.checkValidModel(s))
+            display.setItemDamage(0);
+
         RenderHelper.enableStandardItemLighting();
         RenderHelper.enableGUIStandardItemLighting();
-        mc.getRenderItem().renderItemAndEffectIntoGUI(s, x, y);
+        mc.getRenderItem().renderItemAndEffectIntoGUI(display, x, y);
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableDepth();
-        mc.fontRenderer.drawStringWithShadow(String.valueOf(s.getCount()), x + (s.getCount() > 9 ? 7 : 12), y + 10, 0xFFFFFF);
+        mc.fontRenderer.drawStringWithShadow(String.valueOf(display.getCount()), x + (display.getCount() > 9 ? 7 : 12), y + 10, 0xFFFFFF);
     }
 
     @Override

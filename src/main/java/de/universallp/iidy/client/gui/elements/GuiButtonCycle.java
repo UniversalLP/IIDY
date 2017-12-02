@@ -1,4 +1,4 @@
-package de.universallp.iidy.client.gui;
+package de.universallp.iidy.client.gui.elements;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

@@ -2,7 +2,7 @@ package de.universallp.iidy.core;
 
 import de.universallp.iidy.client.gui.GuiBlockStateTask;
 import de.universallp.iidy.client.gui.GuiSelectTask;
-import de.universallp.iidy.client.task.ITask;
+import de.universallp.iidy.core.task.ITask;
 import de.universallp.iidy.core.container.ContainerBlockStateTask;
 import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.network.PacketHandler;

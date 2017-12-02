@@ -2,9 +2,8 @@ package de.universallp.iidy.client.gui;
 
 import de.universallp.iidy.IsItDoneYet;
 import de.universallp.iidy.client.ClientProxy;
-import de.universallp.iidy.client.task.ITask;
+import de.universallp.iidy.core.task.ITask;
 import de.universallp.iidy.core.handler.ClientEventHandler;
-import de.universallp.iidy.core.handler.ServerEventHandler;
 import de.universallp.iidy.core.network.PacketHandler;
 import de.universallp.iidy.core.network.messages.MessageOpenBlockStateGui;
 import de.universallp.iidy.core.network.messages.MessageRequestList;

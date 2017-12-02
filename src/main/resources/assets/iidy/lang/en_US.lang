@@ -16,3 +16,5 @@ iidy.task.inventory=Inventory task
 iidy.task.blockstate=Blockstate task
 iidy.lbl.changeto=When state changes to
 iidy.lbl.ctrlfordesc=<ctrl> for block description
+iidy.lbl.info=(not all states can be checked)
+iidy.msg.required=Required

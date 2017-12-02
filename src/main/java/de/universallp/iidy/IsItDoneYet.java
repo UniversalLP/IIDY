@@ -11,8 +11,9 @@ import net.minecraftforge.fml.common.event.*;
 
 @Mod(modid = IsItDoneYet.MODID, version = IsItDoneYet.VERSION)
 public class IsItDoneYet {
+    public static final String BUILD = "@BUILD@";
     public static final String MODID = "iidy";
-    public static final String VERSION = "1.11-0.1";
+    public static final String VERSION = "@VERSION@-" + BUILD;
 
     @SidedProxy(clientSide = "de.universallp.iidy.client.ClientProxy", serverSide = "de.universallp.iidy.core.CommonProxy")
     public static CommonProxy proxy;
