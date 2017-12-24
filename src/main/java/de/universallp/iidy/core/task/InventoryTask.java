@@ -1,6 +1,5 @@
 package de.universallp.iidy.core.task;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import de.universallp.iidy.IsItDoneYet;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -76,9 +75,10 @@ public class InventoryTask implements ITask {
             PlayerList pl = s.getPlayerList();
             EntityPlayerMP p = pl.getPlayerByUUID(UUID.fromString(targetPlayerUUID));
 
-            p.sendMessage(new TextComponentString(ChatFormatting.DARK_GREEN + "[IIDY] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
+            p.sendMessage(new TextComponentString(ITask.FORMAT_DARK_GREEN + "[IIDY] " + ITask.FORMAT_YELLOW + finishMsg + ITask.FORMAT_RESET));
         } else {
-            FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(UUID.fromString(targetPlayerUUID)).sendMessage(new TextComponentString(ChatFormatting.RED + "[IIDY Task Failed] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
+            FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(UUID.fromString(targetPlayerUUID)).sendMessage(new TextComponentString(ITask.FORMAT_RED
+                    + "[IIDY Task Failed] " + ITask.FORMAT_YELLOW + finishMsg + ITask.FORMAT_RESET));
         }
     }
 

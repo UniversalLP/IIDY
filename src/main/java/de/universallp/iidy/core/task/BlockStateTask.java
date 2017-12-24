@@ -1,6 +1,5 @@
 package de.universallp.iidy.core.task;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import de.universallp.iidy.IsItDoneYet;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -74,11 +73,12 @@ public class BlockStateTask implements ITask {
             PlayerList pl = s.getPlayerList();
             EntityPlayerMP p = pl.getPlayerByUUID(UUID.fromString(targetPlayerUUID));
             if (p != null && finishMsg != null)
-                p.sendMessage(new TextComponentString(ChatFormatting.DARK_GREEN + "[IIDY] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
+                p.sendMessage(new TextComponentString("§2[IIDY]§r§e " + finishMsg + ""));
             else
                 IsItDoneYet.proxy.log.error("Error while sending notifaction to player!");
         } else
-            FMLServerHandler.instance().getServer().getPlayerList().getPlayerByUUID(UUID.fromString(targetPlayerUUID)).sendMessage(new TextComponentString(ChatFormatting.DARK_RED + "[IIDY Task Failed] " + ChatFormatting.YELLOW + finishMsg + ChatFormatting.RESET));
+            FMLServerHandler.instance().getServer().getPlayerList().getPlayerByUUID(UUID.fromString(targetPlayerUUID)).sendMessage(new TextComponentString(
+                    ITask.FORMAT_RED + "[IIDY Task Failed] " + ITask.FORMAT_YELLOW + finishMsg + ITask.FORMAT_RESET));
     }
     @Override
     public TaskResult isDone() {

@@ -13,6 +13,11 @@ import net.minecraft.util.math.BlockPos;
  */
 public interface ITask {
 
+    String FORMAT_RESET = "§r";
+    String FORMAT_YELLOW = "§e";
+    String FORMAT_DARK_GREEN = "§2";
+    String FORMAT_RED = "§c";
+
     void setTaskID(int taskID);
 
     int getTaskID();
